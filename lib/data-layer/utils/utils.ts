@@ -31,7 +31,9 @@ export function generatePutTransactItem(item): TransactWriteItem {
 export function mapItemToAlias(aliases, values) {
     let item = {};
     for(const key of Object.keys(aliases)){
-        item[aliases[key]] = values[key];
+        if(values[key] !== undefined) {
+            item[aliases[key]] = values[key];
+        }
     }
     return item;
 }
