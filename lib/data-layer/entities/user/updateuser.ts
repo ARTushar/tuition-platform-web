@@ -5,7 +5,7 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import dynamoDBClient from '../../utils/getDynamoDBClient';
 import { getUserById } from './getUser';
-import { generateUserGSI1Keys, generateUserGSI2Keys, generateUserPrimaryKeys } from '../../utils/generateKeys';
+import { genUserGSI1PK, genUserGSI2PK, genUserPK } from '../../utils/generateKeys';
 import { getKeys } from '../../../scripts/utils/utils';
 import User from "../../../models/user/user";
 import {debug, objStringify} from "../../../utils/helpers";
@@ -36,13 +36,13 @@ export async function updateUser(user: User): Promise<User> {
     debug("updating user" + objStringify(user));
     debug("updated vals " + objStringify(updatedVals));
 
-    const oldGsi1Keys = generateUserGSI1Keys(oldUser.email);
+    const oldGsi1Keys = genUserGSI1PK(oldUser.email);
     const oldEmailItem: TransactWriteItem = generateDelTransactItem(oldGsi1Keys.GSI1PK, oldGsi1Keys.GSI1SK);
 
-    const oldGsi2Keys = generateUserGSI2Keys(oldUser.mobileNumber);
+    const oldGsi2Keys = genUserGSI2PK(oldUser.mobileNumber);
     const oldMobileItem: TransactWriteItem = generateDelTransactItem(oldGsi2Keys.GSI2PK, oldGsi2Keys.GSI2SK);
 
-    const gsi1Keys = generateUserGSI1Keys(user.email);
+    const gsi1Keys = genUserGSI1PK(user.email);
     const emailItem: TransactWriteItem = generatePutTransactItem({
             PK: gsi1Keys.GSI1PK,
             SK: gsi1Keys.GSI1SK,
@@ -50,7 +50,7 @@ export async function updateUser(user: User): Promise<User> {
         }, checkUniquePK
     )
 
-    const gsi2Keys = generateUserGSI2Keys(user.mobileNumber);
+    const gsi2Keys = genUserGSI2PK(user.mobileNumber);
     const mobileItem: TransactWriteItem = generatePutTransactItem({
             PK: gsi2Keys.GSI2PK,
             SK: gsi2Keys.GSI2SK,
@@ -58,7 +58,7 @@ export async function updateUser(user: User): Promise<User> {
         }, checkUniquePK
     )
 
-    const primaryKeys = generateUserPrimaryKeys(user.id);
+    const primaryKeys = genUserPK(user.id);
 
     const userItem: TransactWriteItem = generateUpdateTransactWriteItem(
         primaryKeys, updatedVals.updateExpression, updatedVals.attributeNames, updatedVals.attributeValues
@@ -104,7 +104,7 @@ function generateUpdateAttributes(user: User) {
             attributeNames[an] = alias;
             updateExpression += `${an} = ${av}, `
             if(key === 'email') {
-                const gsi1Keys = generateUserGSI1Keys(user.email);
+                const gsi1Keys = genUserGSI1PK(user.email);
                 attributeValues[":gsi1pk"] = gsi1Keys.GSI1PK;
                 attributeValues[":gsi1sk"] = gsi1Keys.GSI1SK;
                 attributeNames["#gsi1pk"] = "GSI1PK";
@@ -112,7 +112,7 @@ function generateUpdateAttributes(user: User) {
                 updateExpression += '#gsi1pk = :gsi1pk, #gsi1sk = :gsi1sk, ';
             }
             if(key === 'mobileNumber') {
-                const gsi2Keys = generateUserGSI2Keys(user.mobileNumber);
+                const gsi2Keys = genUserGSI2PK(user.mobileNumber);
                 attributeValues[":gsi2pk"] = gsi2Keys.GSI2PK;
                 attributeValues[":gsi2sk"] = gsi2Keys.GSI2SK;
                 attributeNames["#gsi2pk"] = "GSI2PK";

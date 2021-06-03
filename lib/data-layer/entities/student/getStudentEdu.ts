@@ -1,4 +1,4 @@
-import StudentEQ from "../../../models/user/student/studentEQ";
+import StudentEQ from "../../../models/student/studentEQ";
 import {GetItemCommand, GetItemCommandInput, GetItemCommandOutput} from "@aws-sdk/client-dynamodb";
 import {generateGetItem} from "../../utils/utils";
 import {StudentEduAliases} from "../../utils/aliases";

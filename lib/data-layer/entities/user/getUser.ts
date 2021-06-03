@@ -1,5 +1,5 @@
 import User from "../../../models/user/user";
-import {generateUserGSI1Keys, generateUserGSI2Keys, generateUserPrimaryKeys} from "../../utils/generateKeys";
+import {genUserGSI1PK, genUserGSI2PK, genUserPK} from "../../utils/generateKeys";
 import {
     GetItemCommand,
     GetItemCommandInput,
@@ -14,7 +14,7 @@ import {generateQueryInput} from "../../utils/utils";
 import {debug} from "../../../utils/helpers";
 
 export async function  getUserById(userId: string): Promise<User> {
-    const primaryKeys = generateUserPrimaryKeys(userId);
+    const primaryKeys = genUserPK(userId);
     const params: GetItemCommandInput = {
         Key: marshall(primaryKeys),
         // ProjectionExpression: '', TODO: add required attributes
@@ -37,7 +37,7 @@ export async function  getUserById(userId: string): Promise<User> {
 
 export async function getUserByEmail(email: string): Promise<User> {
     console.log("email: " + email)
-    const gsi1Keys = generateUserGSI1Keys(email);
+    const gsi1Keys = genUserGSI1PK(email);
 
     const params: QueryCommandInput = generateQueryInput(
         '#pk = :pk AND #sk = :sk', {
@@ -65,7 +65,7 @@ export async function getUserByEmail(email: string): Promise<User> {
 }
 
 export async function getUserByMobile(mobile: string): Promise<User> {
-    const gsi2Keys = generateUserGSI2Keys(mobile);
+    const gsi2Keys = genUserGSI2PK(mobile);
     const params: QueryCommandInput = generateQueryInput(
         '#pk = :pk AND #sk = :sk', {
             "#pk": "GSI2PK",

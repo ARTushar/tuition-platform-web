@@ -1,6 +1,6 @@
 import User from "../../../models/user/user";
 import {getUserById} from "./getUser";
-import {generateUserGSI1Keys, generateUserGSI2Keys, generateUserPrimaryKeys} from "../../utils/generateKeys";
+import {genUserGSI1PK, genUserGSI2PK, genUserPK} from "../../utils/generateKeys";
 import {generateDelTransactItem} from "../../utils/utils";
 import {
     TransactWriteItem,
@@ -17,9 +17,9 @@ export async function deleteUserById(userId: string): Promise<User> {
 
     //TODO: delete all firebase sessions
 
-    const primaryKeys = generateUserPrimaryKeys(user.id);
-    const gsi1Keys = generateUserGSI1Keys(user.email);
-    const gsi2Keys = generateUserGSI2Keys(user.mobileNumber);
+    const primaryKeys = genUserPK(user.id);
+    const gsi1Keys = genUserGSI1PK(user.email);
+    const gsi2Keys = genUserGSI2PK(user.mobileNumber);
 
     let items: TransactWriteItem[] = [generateDelTransactItem(primaryKeys.PK, primaryKeys.SK)];
     if(user.mobileNumber) items.push(generateDelTransactItem(gsi2Keys.GSI2PK, gsi2Keys.GSI2SK));

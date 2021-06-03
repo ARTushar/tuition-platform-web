@@ -1,5 +1,5 @@
-import StudentEQ from "../../../models/user/student/studentEQ";
-import {generateStudentEduPrimaryKeys} from "../../utils/generateKeys";
+import StudentEQ from "../../../models/student/studentEQ";
+import {genStudentEduPK} from "../../utils/generateKeys";
 import {PutItemCommand, PutItemCommandInput} from "@aws-sdk/client-dynamodb";
 import {checkUniquePK, generatePutItemRaw} from "../../utils/utils";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
@@ -11,7 +11,7 @@ export default async function createStudentEdu(id: string, education: StudentEQ)
     education.updatedAt = education.createdAt;
 
     const params: PutItemCommandInput = generatePutItemRaw(
-        [generateStudentEduPrimaryKeys],
+        [genStudentEduPK],
         [[id]], education, 'StudentEducation', checkUniquePK
     )
 

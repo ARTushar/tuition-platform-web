@@ -40,16 +40,7 @@ export const PreferenceAliases = {
 }
 
 export const TutorAliases = {
-    id: 'id',
-    name: 'na',
-    email: 'em',
-    emailVerified: 'emv',
-    accountType: 'at',
-    mobileNumber: 'mn',
-    profilePicture: 'pp',
-    gender: 'gn',
-    createdAt: 'ca',
-    updatedAt: 'ua',
+    userId: 'uid',
     educationQualifications: 'eqs',
     introVideoLink: 'ivl',
     demoVideoLinks: 'dml',
@@ -58,16 +49,7 @@ export const TutorAliases = {
 }
 
 export const StudentAliases = {
-    id: 'id',
-    name: 'na',
-    email: 'em',
-    emailVerified: 'emv',
-    accountType: 'at',
-    mobileNumber: 'mn',
-    profilePicture: 'pp',
-    gender: 'gn',
-    createdAt: 'ca',
-    updatedAt: 'ua',
+    userId: 'uid',
     education: 'ed'
 }
 

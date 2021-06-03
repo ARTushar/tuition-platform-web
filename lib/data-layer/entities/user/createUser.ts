@@ -1,5 +1,5 @@
 import User from "../../../models/user/user";
-import {generateUserGSI1Keys, generateUserGSI2Keys, generateUserPrimaryKeys} from "../../utils/generateKeys";
+import {genUserGSI1PK, genUserGSI2PK, genUserPK} from "../../utils/generateKeys";
 import {
     TransactWriteItem,
     TransactWriteItemsCommand,
@@ -15,9 +15,9 @@ export default async function (user: User): Promise<User> {
     user.createdAt = new Date().toDateString();
     user.updatedAt = user.createdAt;
 
-    const primaryKeys = generateUserPrimaryKeys(user.id);
-    const gsi1Keys = generateUserGSI1Keys(user.email);
-    const gsi2Keys = generateUserGSI2Keys(user.mobileNumber);
+    const primaryKeys = genUserPK(user.id);
+    const gsi1Keys = genUserGSI1PK(user.email);
+    const gsi2Keys = genUserGSI2PK(user.mobileNumber);
 
     let userMarshallItem = {
         PK: primaryKeys.PK,

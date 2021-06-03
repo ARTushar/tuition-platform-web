@@ -1,5 +1,5 @@
-import {mapItemFromAlias, mapItemToAlias} from "../../../data-layer/utils/utils";
-import {StudentEduAliases, TutorEQAliases} from "../../../data-layer/utils/aliases";
+import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
+import {StudentEduAliases, TutorEQAliases} from "../../data-layer/utils/aliases";
 
 interface ConstructorParams {
     degree: string;

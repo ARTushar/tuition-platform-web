@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import {generateArgv, generateRandomString, printObject} from '../utils/utils';
-import StudentEQ from "../../models/user/student/studentEQ";
+import StudentEQ from "../../models/student/studentEQ";
 import createStudentEdu from "../../data-layer/entities/student/createStudentEdu";
 
 const argv = generateArgv();

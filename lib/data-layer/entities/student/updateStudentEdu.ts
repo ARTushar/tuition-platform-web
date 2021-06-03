@@ -1,6 +1,6 @@
 import {UpdateItemCommand, UpdateItemCommandInput, UpdateItemCommandOutput} from "@aws-sdk/client-dynamodb";
 import {generateUpdateAttributes, generateUpdateItem} from "../../utils/utils";
-import {generateStudentEduPrimaryKeys} from "../../utils/generateKeys";
+import {genStudentEduPK} from "../../utils/generateKeys";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
 import {debug, objStringify} from "../../../utils/helpers";
 
@@ -12,7 +12,7 @@ export default async function updateStudentEdu(id: string, education: Education)
     if (!attributes.updated) return null;
 
     const params: UpdateItemCommandInput = generateUpdateItem(
-        generateStudentEduPrimaryKeys, [id], attributes
+        genStudentEduPK, [id], attributes
     )
 
     const command: UpdateItemCommand = new UpdateItemCommand(params);

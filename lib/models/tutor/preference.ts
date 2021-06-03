@@ -1,5 +1,5 @@
-import Schedule from "../../utils/schedule";
-import Remuneration from "../../utils/remuneration";
+import Schedule from "../utils/schedule";
+import Remuneration from "../utils/remuneration";
 
 interface ConstructorParams {
     gender: string;

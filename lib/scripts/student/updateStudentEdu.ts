@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import {generateArgv} from '../utils/utils';
-import StudentEQ from "../../models/user/student/studentEQ";
+import StudentEQ from "../../models/student/studentEQ";
 import updateStudentEdu from "../../data-layer/entities/student/updateStudentEdu";
 
 const argv = generateArgv();
