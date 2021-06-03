@@ -17,7 +17,8 @@ export default class StudentEQ implements Education {
     institute: string;
     level?: number;
     term?: number;
-
+    createdAt: string;
+    updatedAt: string;
 
     constructor({type, department, group, institute, level, term}: ConstructorParams) {
         this.type = type;
@@ -38,4 +39,5 @@ export default class StudentEQ implements Education {
             ...mapItemFromAlias(StudentEduAliases, item)
         })
     }
+
 }

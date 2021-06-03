@@ -1,7 +1,3 @@
-import TutorEQ from "../../models/user/tutor/tutorEQ";
-import {VideoLink} from "../../models/utils/videoLink";
-import Preference from "../../models/user/tutor/preference";
-
 export const UserAliases = {
     id: 'id',
     name: 'na',
@@ -20,7 +16,9 @@ export const StudentEduAliases = {
     group: 'gr',
     institute: 'in',
     level: 'le',
-    term: 'te'
+    term: 'te',
+    createdAt: 'ca',
+    updateAt: 'ua'
 }
 
 export const TutorEQAliases = {
@@ -29,7 +27,9 @@ export const TutorEQAliases = {
     group: 'gr',
     institute: 'in',
     level: 'le',
-    term: 'te'
+    term: 'te',
+    createdAt: 'ca',
+    updateAt: 'ua'
 }
 
 export const PreferenceAliases = {

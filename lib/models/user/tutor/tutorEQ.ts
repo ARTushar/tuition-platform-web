@@ -1,3 +1,6 @@
+import {mapItemFromAlias, mapItemToAlias} from "../../../data-layer/utils/utils";
+import {StudentEduAliases, TutorEQAliases} from "../../../data-layer/utils/aliases";
+
 interface ConstructorParams {
     degree: string;
     medium: string;
@@ -16,6 +19,8 @@ export default class TutorEQ implements Education {
     institute: string;
     level?: number;
     term?: number;
+    createdAt: string;
+    updatedAt: string;
 
 
     constructor({degree, medium, department, group, institute, level, term}: ConstructorParams) {
@@ -26,5 +31,16 @@ export default class TutorEQ implements Education {
         this.institute = institute;
         this.level = level;
         this.term = term;
+    }
+
+    mapToAlias() {
+        return mapItemToAlias(TutorEQAliases, this);
+    }
+
+    static mapFromAlias(item): TutorEQ {
+        return new TutorEQ({
+            medium: undefined, department: undefined, group: undefined, institute: undefined, level: undefined, term: undefined, degree: undefined,
+            ...mapItemFromAlias(StudentEduAliases, item)
+        })
     }
 }

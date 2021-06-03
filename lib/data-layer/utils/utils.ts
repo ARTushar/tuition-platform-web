@@ -1,4 +1,10 @@
-import { BatchGetItemInput, PutItemCommandInput, QueryCommandInput, TransactWriteItem } from '@aws-sdk/client-dynamodb';
+import {
+    BatchGetItemInput,
+    DeleteItemCommandInput, GetItemCommandInput,
+    PutItemCommandInput,
+    QueryCommandInput,
+    TransactWriteItem, UpdateItemCommandInput
+} from '@aws-sdk/client-dynamodb';
 import DynamodbConfig from './dynamodbConfig';
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 import { getKeys } from '../../scripts/utils/utils';
@@ -97,6 +103,15 @@ export function generatePutItemRaw(keyGenerators, params, values, type, conditio
     return item;
 }
 
+export function generateDeleteItem(keyGenerators, params) {
+    const key = keyGenerators(...params)
+    const item: DeleteItemCommandInput = {
+        TableName: DynamodbConfig.tableName,
+        Key: marshall(key)
+    }
+    return item;
+}
+
 function generateItemFromGenerators(keyGenerators, params, values, type) {
     let item = values.mapToAlias();
     let i = 0;
@@ -126,6 +141,28 @@ export function generateQueryInput(keyConditionExpression, attributeNames, attri
     return queryInput;
 }
 
+
+export function generateGetItem(keyGenerator, params) {
+    const key = keyGenerator(...params)
+     let item: GetItemCommandInput = {
+         Key: marshall(key), TableName: DynamodbConfig.tableName
+     }
+     return item
+}
+
+export function generateUpdateItem(keyGenerator, params, updateAttributes: UpdateAttributes, condition=undefined): UpdateItemCommandInput {
+    const key = keyGenerator(...params);
+    let item: UpdateItemCommandInput = {
+        ExpressionAttributeNames: updateAttributes.attributeNames,
+        ExpressionAttributeValues: marshall(updateAttributes.attributeValues, { removeUndefinedValues: true}),
+        Key: marshall(key),
+        TableName: DynamodbConfig.tableName,
+        UpdateExpression: updateAttributes.updateExpression
+    };
+    if(condition) item.ConditionExpression = condition;
+    return item;
+}
+
 export function generateBatchGetItem(items, key, keyGenerator): BatchGetItemInput {
     let keys = [];
     for(const item of items) {
@@ -142,7 +179,15 @@ export function generateBatchGetItem(items, key, keyGenerator): BatchGetItemInpu
         }
     };
 }
-export function generateUpdateAttributes(obj) {
+
+interface UpdateAttributes {
+    updated: boolean;
+    updateExpression: string;
+    attributeNames: { [key: string]: string };
+    attributeValues: object;
+}
+
+export function generateUpdateAttributes(obj): UpdateAttributes {
     let attributeNames = {};
     let attributeValues = {};
     let updateExpression = 'set ';
@@ -151,7 +196,7 @@ export function generateUpdateAttributes(obj) {
 
     for(const key of getKeys(aliasObj)) {
         // if(key === "id" || key === 'createdAt') continue;
-        debug("generate update attributes_"+key, aliasObj[key]);
+        debug("generate update attributes", key, aliasObj[key]);
         if(aliasObj[key] !== undefined){
             const av = ':' + key;
             const an = '#' + key;

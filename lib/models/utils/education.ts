@@ -4,5 +4,6 @@ interface Education {
     group?: string;
     level?: number;
     term?: number;
-
+    createdAt: string;
+    updatedAt: string;
 }

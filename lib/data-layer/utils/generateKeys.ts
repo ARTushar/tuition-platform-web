@@ -18,3 +18,17 @@ export function generateUserGSI2Keys(mobileNumber: string) {
         GSI2SK: "MOBILE#" + mobileNumber,
     }
 }
+
+export function generateStudentEduPrimaryKeys(id: string) {
+    return {
+        PK: "UID#" + id,
+        SK: "EDU#"
+    }
+}
+
+export function generateTutorEduPrimaryKeys(id: string, degree: string) {
+    return {
+        PK: "UID#" + id,
+        SK: "EDU#" + degree
+    }
+}
