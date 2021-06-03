@@ -19,13 +19,17 @@ export function generateDelTransactItem(pk: string, sk: string): TransactWriteIt
     }
 }
 
-export function generatePutTransactItem(item): TransactWriteItem {
-    return {
+export function generatePutTransactItem(item, condition=undefined): TransactWriteItem {
+    let putItem: TransactWriteItem = {
         Put: {
             TableName: DynamodbConfig.tableName,
             Item: marshall(item, {removeUndefinedValues: true}),
         }
     }
+    if(condition){
+        putItem.Put.ConditionExpression = condition;
+    }
+    return putItem;
 }
 
 export function mapItemToAlias(aliases, values) {
@@ -46,16 +50,24 @@ export function mapItemFromAlias(aliases, values) {
     return item;
 }
 
-export function generatePutTransactItemRaw(keyGenerator, params, values, type): TransactWriteItem {
+export function generatePutTransactItemRaw(keyGenerator, params, values, type, gsiGenerators, condition=undefined): TransactWriteItem {
     const keys = keyGenerator(...params);
-    const item = {
+    let item = {
         PK: keys.PK,
         SK: keys.SK,
         ...values.mapToAlias(),
         '_tp': type
     };
+    if(gsiGenerators) {
+        for(const generator of gsiGenerators) {
+            const gsiKeys = generator[0](...generator[1])
+            for(const key of Object.keys(gsiKeys)){
+                item[key] = gsiKeys[key]
+            }
+        }
+    }
 
-    return generatePutTransactItem(item);
+    return generatePutTransactItem(item, condition);
 }
 
 export function generateUpdateTransactWriteItem(key, expression, names, values, condition=undefined): TransactWriteItem {

@@ -1,12 +1,14 @@
 import User from "../user";
 import StudentEQ from "./studentEQ";
+import {mapItemToAlias} from "../../../data-layer/utils/utils";
+import {StudentAliases} from "../../../data-layer/utils/aliases";
 
 
 interface ConstructorParams {
     id: string;
     name: string;
     email: string;
-    emailVerified: string;
+    emailVerified: boolean;
     accountType: string;
     mobileNumber: string;
     profilePicture: string;
@@ -24,4 +26,9 @@ export default class Student extends User {
         super({id, name, email, emailVerified, accountType, mobileNumber, profilePicture, gender, createdAt, updatedAt});
         this.education = education;
     }
+
+    mapToAlias() {
+        return mapItemToAlias(StudentAliases, this);
+    }
+
 }
