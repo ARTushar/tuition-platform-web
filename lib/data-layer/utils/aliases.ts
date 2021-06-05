@@ -9,6 +9,7 @@ export const UserAliases = {
     gender: 'gn',
     createdAt: 'ca',
     updatedAt: 'ua',
+    address: 'ad'
 }
 export const StudentEduAliases = {
     type: 'tp',
@@ -17,8 +18,6 @@ export const StudentEduAliases = {
     institute: 'in',
     level: 'le',
     term: 'te',
-    createdAt: 'ca',
-    updateAt: 'ua'
 }
 
 export const TutorEQAliases = {
@@ -28,24 +27,48 @@ export const TutorEQAliases = {
     institute: 'in',
     level: 'le',
     term: 'te',
-    createdAt: 'ca',
-    updateAt: 'ua'
 }
 
 export const PreferenceAliases = {
     gender: 'gn',
-    locations: 'loc',
+    country: 'cn',
+    district: 'dis',
+    areas: 'ar',
     schedule: 'sc',
     remunerations: 'rem'
 }
 
 export const TutorAliases = {
     userId: 'uid',
+    enabled: 'en',
+    verified: 'vr',
+    name: 'na',
+    gender: 'gn',
+    profilePicture: 'pf',
+    rating: 'ra',
     educationQualifications: 'eqs',
     introVideoLink: 'ivl',
     demoVideoLinks: 'dml',
     introText: 'it',
-    preference: 'pr'
+    preference: 'pr',
+    createdAt: 'ca',
+    updatedAt: 'ua',
+}
+
+export const ShortTutorAliases = {
+    userId: 'uid',
+    enabled: 'en',
+    verified: 'vr',
+    name: 'na',
+    gender: 'gn',
+    profilePicture: 'pf',
+    rating: 'ra',
+    ugInstitute: 'ui',
+    ugDepartment: 'ud',
+    country: 'cn',
+    district: 'dis',
+    areas: 'ar',
+    remuneration: 'rem',
 }
 
 export const StudentAliases = {
@@ -56,10 +79,10 @@ export const StudentAliases = {
 export const AddressAliases = {
     country: 'cn',
     district: 'dis',
-    upazilla: 'up',
+    // upazilla: 'up',
     area: 'ar',
-    ward: 'wa',
-    postalCode: 'pc'
+    // ward: 'wa',
+    // postalCode: 'pc'
 }
 
 export const LocationAliases = {
@@ -86,10 +109,6 @@ export const VideoLinkAliases = {
 }
 
 export const RemunerationType = {
-    5: '5',
-    6: '6',
-    7: '7',
-    8: '8',
     ssc: 'ssc',
     hsc: 'hsc',
     admission: 'adm',
@@ -117,9 +136,37 @@ export const EducationMediumType = {
 }
 
 
-export const accountType = {
+export const AccountType = {
     student: 'st',
     tutor: 'tu',
     moderator: 'mo',
     admin: 'ad'
+}
+
+export const Gender = {
+    male: 'm',
+    female: 'f'
+}
+
+export const GenderPref = {
+    male:'m',
+    female:'f',
+    both: 'b'
+}
+export const EducationDegree = {
+    secondary : 's',
+    higherSecondary : 'hs',
+    undergraduate : 'ug',
+    postgraduate : 'pg',
+}
+
+export const ScheduleType = {
+    morning: 'mo',
+    noon: 'no',
+    afternoon: 'af',
+    afterAsar: 'as',
+    afterMagrib: 'am',
+    afterIsha: 'ai',
+    evening: 'ev',
+    night: 'ni'
 }

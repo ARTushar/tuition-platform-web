@@ -29,7 +29,14 @@ export function genStudentEduPK(id: string) {
 export function genTutorPK(id: string) {
     return {
         PK: "UID#" + id,
-        SK: "TUTOR#" + id
+        SK: "TUTOR"
+    }
+}
+
+export function genTutorShortPK(id: string, tuitionType: string) {
+    return {
+        PK: 'UID#' + id,
+        SK: '#TUTOR#T#' + tuitionType
     }
 }
 
@@ -47,57 +54,34 @@ export function genTutorPrefPK(id: string) {
     }
 }
 
+export interface GenShortTutorGSI1PKParams {
+    enabled: boolean;
+    verified: boolean;
+    country: string;
+    district: string;
+    institute: string;
+    tuitionType: string;
+    userId: string;
+}
+
+export function genShortTutorGSI1PK({enabled, verified, country, district, institute, tuitionType, userId}: GenShortTutorGSI1PKParams) {
+    return {
+        GSI1PK: "EN#" + enabled + "#VR#" + verified + "#CN#" + country + "#DIS#" + district + "#T#" + tuitionType,
+        GSI1SK:  "INS#" + institute  + "#" + userId
+    }
+}
+
 interface GenTutorGSI1PKParams {
     enabled: boolean;
     verified: boolean;
-    country: string;
-    district: string;
-    upazilla: string;
-    area: string;
-    tuitionType: string;
-    institute: boolean;
-    userId: string;
-}
-
-export function genTutorGSI1PK({enabled, verified, country, district, upazilla, area, tuitionType, institute, userId}: GenTutorGSI1PKParams) {
-    return {
-        GSI1PK: "EN#" + enabled + "#VER#" + verified + "#CN#" + country + "#DIS#" + district + "#UZ#" + upazilla + "#AR#" + area + "#T#" + tuitionType,
-        GSI1SK: "INS#" + institute + "#" + userId
-    }
-}
-
-interface GenTutorGSI2PKParams {
-    enabled: boolean;
-    verified: boolean;
-    country: string;
-    district: string;
-    upazilla: string;
-    area: string;
-    tuitionType: string;
-    gender: string;
-    institute: boolean;
-    userId: string;
-}
-
-export function genTutorGSI2PK({enabled, verified, country, district, upazilla, area, tuitionType, gender, institute, userId}: GenTutorGSI2PKParams) {
-    return {
-        GSI2PK: "EN#" + enabled + "#VER#" + verified + "#CN#" + country + "#DIS#" + district + "#UZ#" + upazilla + "#AR#" + area + "#T#" + tuitionType + "#GEN#" + gender,
-        GSI2SK: "INS#" + institute + "#" + userId
-    }
-}
-
-interface GenTutorGSI3PKParams {
-    enabled: boolean;
-    verified: boolean;
-    tuitionType: string;
     institute: string;
     rating: Number;
     userId: string;
 }
 
-export function genTutorGSI3PK({enabled, verified, tuitionType, institute, rating, userId}: GenTutorGSI3PKParams) {
+export function genTutorGSI1PK({enabled, verified, institute, rating, userId}: GenTutorGSI1PKParams) {
     return {
-        GSI3PK: "EN#" + enabled + "#VER#" + verified + "#T#" + tuitionType + "#INS#" + institute,
-        GSI3SK: "RT#" + rating + "#" + userId
+        GSI1PK: "EN#" + enabled + "#VR#" + verified + "#INS#" + institute,
+        GSI1SK: "RT#" + rating + "#" + userId
     }
 }

@@ -1,3 +1,6 @@
+import randomParams from '../../files/random-params.json';
+
+
 export function printObject(obj) {
     console.log(JSON.stringify(obj, null, 2))
 }
@@ -31,8 +34,10 @@ export function generateRandomString(length: number): string {
 }
 
 export function generateRandomMobileNumber(totalDigits:number = 11): string {
-    let number = '';
-    for(let i = 0; i < totalDigits; i++) {
+    let number = '+8801';
+    let codes = ['3', '4', '5', '6', '7', '8', '9']
+    number += codes[getRandomInt(codes.length)];
+    for(let i = 0; i < totalDigits-3; i++) {
         number += getRandomInt(10).toString();
     }
     return number;
@@ -41,6 +46,11 @@ export function generateRandomMobileNumber(totalDigits:number = 11): string {
 export function generateRandomName(length=10): string {
     let characters = 'abcdefghijklmnopqrstuvwxyz';
     return generateRandomStringChars(length, characters);
+}
+
+export function generateRandomNameFromDict(): string {
+    const index = getRandomInt(randomParams.names.length);
+    return randomParams.names[index];
 }
 
 export function generateRandomEmail(length=10): string {

@@ -56,7 +56,7 @@ export function mapItemFromAlias(aliases, values) {
     return item;
 }
 
-export function generatePutTransactItemRaw(keyGenerator, params, values, type, gsiGenerators, condition=undefined): TransactWriteItem {
+export function generatePutTransactItemRaw(keyGenerator, params, values, type, gsiGenerators=undefined, condition=undefined): TransactWriteItem {
     const keys = keyGenerator(...params);
     let item = {
         PK: keys.PK,
@@ -66,7 +66,7 @@ export function generatePutTransactItemRaw(keyGenerator, params, values, type, g
     };
     if(gsiGenerators) {
         for(const generator of gsiGenerators) {
-            const gsiKeys = generator[0](...generator[1])
+            const gsiKeys = generator[0](generator[1])
             for(const key of Object.keys(gsiKeys)){
                 item[key] = gsiKeys[key]
             }

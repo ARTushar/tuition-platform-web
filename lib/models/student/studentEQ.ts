@@ -1,5 +1,6 @@
 import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {StudentEduAliases} from "../../data-layer/utils/aliases";
+import {Education} from "../utils/education";
 
 interface ConstructorParams {
     type: string;
@@ -10,7 +11,7 @@ interface ConstructorParams {
     term: number;
 }
 
-export default class StudentEQ implements Education {
+export default class StudentEQ implements Education{
     type: string;
     department?: string;
     group?: string;

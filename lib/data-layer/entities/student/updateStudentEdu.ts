@@ -3,8 +3,9 @@ import {generateUpdateAttributes, generateUpdateItem} from "../../utils/utils";
 import {genStudentEduPK} from "../../utils/generateKeys";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
 import {debug, objStringify} from "../../../utils/helpers";
+import StudentEQ from "../../../models/student/studentEQ";
 
-export default async function updateStudentEdu(id: string, education: Education): Promise<boolean> {
+export default async function updateStudentEdu(id: string, education: StudentEQ): Promise<boolean> {
     const debugCode = 'updateStudentEdu';
     education.updatedAt = new Date().toDateString();
 

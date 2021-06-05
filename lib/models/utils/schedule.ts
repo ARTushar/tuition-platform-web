@@ -1,23 +1,23 @@
 import {FreeTime} from "./freeTime";
 
 interface ConstructorParams {
-    saturday?: FreeTime[];
-    sunday?: FreeTime[];
-    monday?: FreeTime[];
-    tuesday?: FreeTime[];
-    wednesday?: FreeTime[];
-    thursday?: FreeTime[];
-    friday?: FreeTime[];
+    saturday?: string[];
+    sunday?: string[];
+    monday?: string[];
+    tuesday?: string[];
+    wednesday?: string[];
+    thursday?: string[];
+    friday?: string[];
 }
 
 export default class Schedule {
-    saturday: FreeTime[];
-    sunday: FreeTime[];
-    monday: FreeTime[];
-    tuesday: FreeTime[];
-    wednesday: FreeTime[];
-    thursday: FreeTime[];
-    friday: FreeTime[];
+    saturday: string[];
+    sunday: string[];
+    monday: string[];
+    tuesday: string[];
+    wednesday: string[];
+    thursday: string[];
+    friday: string[];
 
 
     constructor({saturday, sunday, monday, tuesday, wednesday, thursday, friday}: ConstructorParams) {

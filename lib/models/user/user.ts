@@ -1,17 +1,17 @@
 import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {UserAliases} from "../../data-layer/utils/aliases";
+import Address from "../utils/address";
 
 interface ConstructorParams {
-    id: string;
+    id?: string;
     name: string;
     email: string;
-    emailVerified: boolean;
+    emailVerified?: boolean;
     accountType: string;
     mobileNumber: string;
     gender?: string;
     profilePicture?: string;
-    createdAt?: string;
-    updatedAt?: string;
+    address?: Address;
 }
 
 export default class User {
@@ -25,9 +25,10 @@ export default class User {
     gender: string;
     createdAt: string;
     updatedAt: string;
+    address: Address
 
 
-    constructor({id, name, email, emailVerified, accountType, mobileNumber, profilePicture, gender, createdAt, updatedAt}: ConstructorParams) {
+    constructor({id, name, email, emailVerified, accountType, mobileNumber, profilePicture, gender, address}: ConstructorParams) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -36,20 +37,23 @@ export default class User {
         this.mobileNumber = mobileNumber;
         this.profilePicture = profilePicture;
         this.gender = gender;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.address = address;
     }
 
     mapToAlias() {
-        return mapItemToAlias(UserAliases, this);
+        return {
+            ...mapItemToAlias(UserAliases, this),
+            [UserAliases.address]: this.address.mapToAlias()
+        };
     }
 
     static mapFromAlias(item): User {
         return new User({
-            accountType: undefined, createdAt: undefined, email: undefined, emailVerified: undefined,
+            accountType: undefined, email: undefined, emailVerified: undefined,
             gender: undefined, id: undefined, mobileNumber: undefined, name: undefined,
-            profilePicture: undefined, updatedAt: undefined,
-            ...mapItemFromAlias(UserAliases, item)
+            profilePicture: undefined,
+            ...mapItemFromAlias(UserAliases, item),
+            address: Address.mapFromAlias(item[UserAliases.address])
         });
     }
 }

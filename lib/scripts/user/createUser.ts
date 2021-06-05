@@ -3,6 +3,7 @@
 import {generateArgv, generateRandomString, printObject} from '../utils/utils';
 import createUser from "../../data-layer/entities/user/createUser";
 import User from "../../models/user/user";
+import {generateRandomAddress, generateRandomUser} from "../utils/data_generation/generateRandomUser";
 
 const argv = generateArgv();
 
@@ -15,6 +16,7 @@ const argv = generateArgv();
         emailVerified: argv.emailV? argv.emailV === 'true': undefined,
         gender: argv.gender,
         id: generateRandomString(27),
+        address: generateRandomAddress()
     });
     try {
         const newUser = await createUser(user);

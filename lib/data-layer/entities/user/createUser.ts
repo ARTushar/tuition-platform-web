@@ -9,9 +9,10 @@ import {
 import {checkUniquePK, generatePutTransactItem} from "../../utils/utils";
 import {marshall} from "@aws-sdk/util-dynamodb";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
-import {debug} from "../../../utils/helpers";
+import {debug, generateID, objStringify} from "../../../utils/helpers";
 
 export default async function (user: User): Promise<User> {
+    if(!user.id) user.id = await generateID();
     user.createdAt = new Date().toDateString();
     user.updatedAt = user.createdAt;
 
@@ -31,25 +32,25 @@ export default async function (user: User): Promise<User> {
     };
 
     const userItem: TransactWriteItem = generatePutTransactItem(
-        marshall(userMarshallItem, { removeUndefinedValues: true }),
+        userMarshallItem,
         checkUniquePK
     )
 
     const emailItem: TransactWriteItem = generatePutTransactItem(
-        marshall({
+        {
             PK: gsi1Keys.GSI1PK,
             SK: gsi1Keys.GSI1SK,
             _tp: 'UserEmail'
-        }),
+        },
         checkUniquePK
     );
 
     const mobileItem: TransactWriteItem = generatePutTransactItem(
-        marshall({
+        {
             PK: gsi2Keys.GSI2PK,
             SK: gsi2Keys.GSI2SK,
             _tp: 'UserMobile'
-        }),
+        },
         checkUniquePK
     );
 
@@ -61,6 +62,8 @@ export default async function (user: User): Promise<User> {
     const params: TransactWriteItemsCommandInput = {
         TransactItems: items,
     }
+
+    debug('createUser', 'params', objStringify(params));
     const command: TransactWriteItemsCommand = new TransactWriteItemsCommand(params);
 
     try {
