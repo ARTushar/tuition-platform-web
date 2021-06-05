@@ -54,11 +54,19 @@ export default class Tutor{
     }
 
     mapToAlias() {
-        return mapItemToAlias(TutorAliases, this);
+        let eqs = []
+        for(const edu of this.educationQualifications) {
+            eqs.push(edu.mapToAlias())
+        }
+        return {
+            ...mapItemToAlias(TutorAliases, this),
+            [TutorAliases.educationQualifications]: eqs
+        };
     }
 
     static mapFromAlias(items: { [p: string]: AttributeValue }[]): Tutor {
         let tutor, eqs = [], vls = [];
+        let pref: Preference;
         for (const rawItem of items) {
             const item = unmarshall(rawItem);
             switch (item._tp) {
@@ -66,23 +74,25 @@ export default class Tutor{
                     tutor = mapItemFromAlias(TutorAliases, item);
                     break;
                 case 'TutorPreference':
-                    tutor['preference'] = mapItemFromAlias(PreferenceAliases, item);
+                    pref = Preference.mapFromAlias(item)
                     break;
                 default:
                     throw new Error("Invalid type");
             }
         }
         for (const eq of tutor.educationQualifications) {
-            eqs.push(new TutorEQ(eq));
+            eqs.push(TutorEQ.mapFromAlias(eq));
         }
-        for (const vl of tutor.demoVideoLinks) {
-            vls.push(new VideoLink(vl))
+        if(tutor.demoVideoLinks) {
+            for (const vl of tutor.demoVideoLinks) {
+                vls.push(new VideoLink(vl))
+            }
         }
         return new Tutor({
             ...tutor,
             educationQualifications: eqs,
             demoVideoLinks: vls,
-            preference: new Preference(tutor.preference)
+            preference: pref
         })
     }
 }

@@ -1,5 +1,5 @@
 import Remuneration from "../utils/remuneration";
-import {mapItemToAlias} from "../../data-layer/utils/utils";
+import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {ShortTutorAliases} from "../../data-layer/utils/aliases";
 
 interface ConstructorParams {
@@ -14,7 +14,7 @@ interface ConstructorParams {
     rating: number;
     country: string;
     district: string;
-    areas: Set<string>;
+    areas: string[];
     remuneration: Remuneration;
 }
 
@@ -30,7 +30,7 @@ export default class ShortTutor {
     rating: number;
     country: string;
     district: string;
-    areas: Set<string>;
+    areas: string[];
     remuneration: Remuneration
 
 
@@ -51,6 +51,19 @@ export default class ShortTutor {
     }
 
     mapToAlias() {
-        return mapItemToAlias(ShortTutorAliases, this);
+        return {
+            ...mapItemToAlias(ShortTutorAliases, this),
+            [ShortTutorAliases.remuneration]: this.remuneration.mapToAlias()
+        };
+    }
+
+    static mapFromAlias(item): ShortTutor {
+        return new ShortTutor({
+            areas: undefined, country: undefined, district: undefined, enabled: undefined,
+            gender: undefined, name: undefined, profilePicture: undefined, rating: undefined,
+            ugDepartment: undefined, ugInstitute: undefined, userId: undefined, verified: undefined,
+            ...mapItemFromAlias(ShortTutorAliases, item),
+            remuneration: Remuneration.mapFromAlias(item[ShortTutorAliases.remuneration])
+        })
     }
 }

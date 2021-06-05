@@ -95,6 +95,7 @@ export default async function createTutor(id: string, tutor: Tutor) {
     items.push(generatePutTransactItemRaw(genTutorPrefPK, [tutor.userId], tutor.preference, 'TutorPreference'));
 
     console.assert(items.length <= 25);
+    // debug('createTutor', 'transact items', objStringify(items));
 
     const params: TransactWriteItemsInput = {
         TransactItems: items

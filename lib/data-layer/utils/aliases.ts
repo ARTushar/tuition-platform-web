@@ -84,7 +84,12 @@ export const AddressAliases = {
     // ward: 'wa',
     // postalCode: 'pc'
 }
-
+export const RemunerationAliases = {
+    type: 'ty',
+    subjects: 'su',
+    from: 'fr',
+    to: 'to'
+}
 export const LocationAliases = {
     country: 'cn',
     district: 'dis',

@@ -1,4 +1,6 @@
 import {FreeTime} from "./freeTime";
+import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
+import {ScheduleAliases} from "../../data-layer/utils/aliases";
 
 interface ConstructorParams {
     saturday?: string[];
@@ -28,5 +30,12 @@ export default class Schedule {
         this.wednesday = wednesday;
         this.thursday = thursday;
         this.friday = friday;
+    }
+
+    mapToAlias() {
+        return mapItemToAlias(ScheduleAliases, this);
+    }
+    static mapFromAlias(item) {
+        return new Schedule(mapItemFromAlias(ScheduleAliases, item));
     }
 }

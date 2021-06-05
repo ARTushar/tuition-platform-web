@@ -1,13 +1,13 @@
 import Schedule from "../utils/schedule";
 import Remuneration from "../utils/remuneration";
-import {mapItemToAlias} from "../../data-layer/utils/utils";
+import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {PreferenceAliases} from "../../data-layer/utils/aliases";
 
 interface ConstructorParams {
     gender: string;
     country: string;
     district: string;
-    areas: Set<string>;
+    areas: string[];
     schedule: Schedule;
     remunerations: Remuneration[];
 }
@@ -16,7 +16,7 @@ export default class Preference {
     gender: string;
     country: string;
     district: string;
-    areas: Set<string>;
+    areas: string[];
     schedule: Schedule;
     remunerations: Remuneration[];
 
@@ -31,6 +31,27 @@ export default class Preference {
     }
 
     mapToAlias() {
-        return mapItemToAlias(PreferenceAliases, this);
+        let rems = []
+        for(const rem of this.remunerations) {
+            rems.push(rem.mapToAlias())
+        }
+        return {
+            ...mapItemToAlias(PreferenceAliases, this),
+            [PreferenceAliases.remunerations]: rems,
+            [PreferenceAliases.schedule]: this.schedule.mapToAlias()
+        };
+    }
+
+    static mapFromAlias(item): Preference{
+        let rems: Remuneration[] = [];
+        for(const rem of item[PreferenceAliases.remunerations]) {
+            rems.push(Remuneration.mapFromAlias(rem))
+        }
+        return new Preference({
+            areas: undefined, country: undefined, district: undefined, gender: undefined,
+            ...mapItemFromAlias(PreferenceAliases, item),
+            schedule: Schedule.mapFromAlias(item[PreferenceAliases.schedule]),
+            remunerations: rems
+        })
     }
 }

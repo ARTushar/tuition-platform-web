@@ -8,6 +8,7 @@ import {debug, objStringify} from "../../../utils/helpers";
 export async function getTutorByUserId(userId: string) {
     const debugCode = 'getTutorByUserId';
     const pk = genTutorPK(userId);
+    debug(debugCode, 'pk', pk);
     const params: QueryCommandInput = generateQueryInput(
         '#pk = :pk AND begins_with(#sk, :sk)' ,
         {

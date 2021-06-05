@@ -9,6 +9,7 @@ import Preference from "../../../models/tutor/preference";
 import Schedule from "../../../models/utils/schedule";
 import Remuneration from "../../../models/utils/remuneration";
 import Areas from '../../../files/areas.json';
+import {debug} from "../../../utils/helpers";
 
 
 export function generateRandomTutor(user: User) {
@@ -100,9 +101,9 @@ function generateRandomSchedule(): Schedule {
 
 function generateRandomRemuneration(type: string){
     let totalSubjects = getRandomInt(1, 3);
-    let subjects: Set<string> = new Set<string>();
+    let subjects: string[] = [];
     for(let i = 0; i < totalSubjects; i++) {
-        subjects.add(randomParams.subjects[getRandomInt(randomParams.subjects.length)]);
+        subjects.push(randomParams.subjects[getRandomInt(randomParams.subjects.length)]);
     }
     const fr = getRandomInt(20, 10);
     const t = getRandomInt(fr + 5, fr);
@@ -116,10 +117,10 @@ function generateRandomRemuneration(type: string){
 
 function generateRandomPreference(address: Address): Preference {
     const totalAreas = getRandomInt(6, 1);
-    let areasNeeded:Set<string> = new Set<string>();
+    let areasNeeded:string[] = [];
 
     for(let i = 0; i < totalAreas; i++) {
-        areasNeeded.add(Areas[address.district][getRandomInt(Areas[address.district].length)]);
+        areasNeeded.push(Areas[address.district][getRandomInt(Areas[address.district].length)]);
     }
 
     const totalRems = getRandomInt(2, 1);
