@@ -82,7 +82,7 @@ interface TutorByLocationType {
     lastKey?: any;
 }
 
-export async function getTutorsByLocationTypeGender({enabled, verified, type, country, district, institute, area, gender, subjects, limit=1000, lastKey}: TutorByLocationType) {
+export async function getTutorsByLoTypeGenSub({enabled, verified, type, country, district, institute, area, gender, subjects, limit=1000, lastKey}: TutorByLocationType) {
     const pk = genShortTutorGSI1PK({
         enabled,
         verified,

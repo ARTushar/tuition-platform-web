@@ -1,14 +1,14 @@
 #!/usr/bin/env ts-node
 
 import { generateArgv, printObject } from '../utils/utils';
-import {getTutorsByLocationTypeGender} from "../../data-layer/entities/tutor/getTutor";
+import {getTutorsByLoTypeGenSub} from "../../data-layer/entities/tutor/getTutor";
 
 const argv = generateArgv();
 
 (async ()=> {
     if(argv.type) {
         try {
-            const tutors = await getTutorsByLocationTypeGender({
+            const tutors = await getTutorsByLoTypeGenSub({
                 enabled: true,
                 verified: false,
                 type: argv.type,

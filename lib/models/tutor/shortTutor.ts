@@ -1,6 +1,7 @@
 import Remuneration from "../utils/remuneration";
 import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {ShortTutorAliases} from "../../data-layer/utils/aliases";
+import {getTutorsByLoTypeGenSub} from "../../data-layer/entities/tutor/getTutor";
 
 interface ConstructorParams {
     userId: string;
@@ -65,5 +66,13 @@ export default class ShortTutor {
             ...mapItemFromAlias(ShortTutorAliases, item),
             remuneration: item[ShortTutorAliases.remuneration]? Remuneration.mapFromAlias(item[ShortTutorAliases.remuneration]): undefined
         })
+    }
+
+    static getTutors(query) {
+        try {
+            return getTutorsByLoTypeGenSub(query);
+        } catch (e) {
+            throw e;
+        }
     }
 }

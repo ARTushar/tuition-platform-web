@@ -5,6 +5,7 @@ import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {PreferenceAliases, TutorAliases} from "../../data-layer/utils/aliases";
 import {AttributeValue} from "@aws-sdk/client-dynamodb";
 import {unmarshall} from "@aws-sdk/util-dynamodb";
+import {getTutorByUserId} from "../../data-layer/entities/tutor/getTutor";
 
 interface ConstructorParams {
     userId: string;
@@ -94,5 +95,13 @@ export default class Tutor{
             demoVideoLinks: vls,
             preference: pref
         })
+    }
+
+    static async getTutorById(id: string): Promise<Tutor> {
+        try {
+            return await getTutorByUserId(id);
+        } catch (e) {
+            throw e;
+        }
     }
 }
