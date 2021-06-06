@@ -41,7 +41,7 @@ export default class TutorEQ implements Education {
     static mapFromAlias(item): TutorEQ {
         return new TutorEQ({
             medium: undefined, department: undefined, group: undefined, institute: undefined, level: undefined, term: undefined, degree: undefined,
-            ...mapItemFromAlias(StudentEduAliases, item)
+            ...mapItemFromAlias(TutorEQAliases, item)
         })
     }
 }
