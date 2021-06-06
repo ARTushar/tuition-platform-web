@@ -68,9 +68,14 @@ export default class ShortTutor {
         })
     }
 
-    static getTutors(query) {
+    static async getTutors(query) {
         try {
-            return getTutorsByLoTypeGenSub(query);
+            return await getTutorsByLoTypeGenSub({
+                enabled: true,
+                verified: false,
+                country: 'Bangladesh',
+                ...query
+            });
         } catch (e) {
             throw e;
         }

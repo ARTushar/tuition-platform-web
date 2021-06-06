@@ -11,4 +11,6 @@ handler
         } catch (e) {
             next(e);
         }
-    })
+    });
+
+export default handler;

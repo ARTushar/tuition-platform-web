@@ -123,12 +123,14 @@ export async function getTutorsByLoTypeGenSub({enabled, verified, type, country,
         let subIx = ca+1;
         ca += 2;
         for(const sub of subjects) {
-            if(filterExpression.length) filterExpression += ' AND '
-            filterExpression += `contains(#f${remIx}.#f${subIx}, :f${cv})`;
-            attributeNames[`#f${remIx}`] = ShortTutorAliases.remuneration;
-            attributeNames[`#f${subIx}`] = RemunerationAliases.subjects;
-            attributeValues[`:f${cv}`] = sub;
-            cv++;
+            if(sub){
+                if(filterExpression.length) filterExpression += ' AND '
+                filterExpression += `contains(#f${remIx}.#f${subIx}, :f${cv})`;
+                attributeNames[`#f${remIx}`] = ShortTutorAliases.remuneration;
+                attributeNames[`#f${subIx}`] = RemunerationAliases.subjects;
+                attributeValues[`:f${cv}`] = sub;
+                cv++;
+            }
         }
     }
     debug('filter expression', filterExpression);
