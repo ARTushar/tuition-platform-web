@@ -2,7 +2,7 @@ import {
     BatchGetItemInput,
     DeleteItemCommandInput, GetItemCommandInput,
     PutItemCommandInput,
-    QueryCommandInput,
+    QueryCommandInput, ScanCommandInput,
     TransactWriteItem, UpdateItemCommandInput
 } from '@aws-sdk/client-dynamodb';
 import DynamodbConfig from './dynamodbConfig';
@@ -228,4 +228,35 @@ export function generateUpdateAttributes(obj): UpdateAttributes {
     }
     updateExpression = updateExpression.substr(0, updateExpression.length-2)
     return {updated, updateExpression, attributeNames, attributeValues};
+}
+
+interface GenerateScanInputParams {
+    attributeNames: any;
+    attributeValues: any;
+    filterExpression: any;
+    indexName?: any;
+    lastKey?: any;
+    limit?: any;
+}
+
+export function generateScanInput({attributeNames, attributeValues, filterExpression, indexName=undefined, lastKey=undefined, limit=undefined}: GenerateScanInputParams): ScanCommandInput{
+
+    let scanInput: ScanCommandInput = {
+        TableName: DynamodbConfig.tableName,
+        ExpressionAttributeNames: attributeNames,
+        ExpressionAttributeValues: marshall(attributeValues)
+    }
+    if(filterExpression && filterExpression.length > 1) {
+        scanInput.FilterExpression = filterExpression;
+    }
+    if(indexName) {
+        scanInput.IndexName = indexName;
+    }
+    if(lastKey) {
+        scanInput.ExclusiveStartKey = lastKey;
+    }
+    if(limit) {
+        scanInput.Limit = limit
+    }
+    return scanInput;
 }

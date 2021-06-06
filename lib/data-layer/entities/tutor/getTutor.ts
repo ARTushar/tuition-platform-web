@@ -1,5 +1,11 @@
-import {QueryCommand, QueryCommandInput, QueryCommandOutput} from "@aws-sdk/client-dynamodb";
-import {generateQueryInput} from "../../utils/utils";
+import {
+    QueryCommand,
+    QueryCommandInput,
+    QueryCommandOutput,
+    ScanCommand,
+    ScanCommandInput
+} from "@aws-sdk/client-dynamodb";
+import {generateQueryInput, generateScanInput} from "../../utils/utils";
 import {genShortTutorGSI1PK, genTutorGSI1PK, genTutorPK} from "../../utils/generateKeys";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
 import Tutor from "../../../models/tutor/tutor";
@@ -153,6 +159,29 @@ export async function getTutorsByLoTypeGenSub({enabled, verified, type, country,
 
 }
 
+export async function getAllTutors() {
+    const params: ScanCommandInput = generateScanInput({
+        attributeNames: {'#tp': '_tp'},
+        attributeValues: {':tp': 'Tutor'},
+        filterExpression: '#tp = :tp',
+    })
+    const command = new ScanCommand(params);
+    try {
+        const response = await dynamoDBClient.send(command);
+        debug('all tutors', 'response', objStringify(response));
+        let results: ShortTutor[] = [];
+        for (const rawItem of response.Items) {
+            const item = unmarshall(rawItem);
+            results.push(ShortTutor.mapFromAlias(item));
+        }
+        return {results, lastEvaluatedKey: response.LastEvaluatedKey};
+
+    } catch (e) {
+        debug('all tutors error', e);
+        throw e;
+    }
+}
+
 async function performQuery(params) {
 
     const command = new QueryCommand(params);
@@ -163,7 +192,7 @@ async function performQuery(params) {
         let results: ShortTutor[] = [];
         for (const rawItem of response.Items) {
             const item = unmarshall(rawItem);
-            results.push(ShortTutor.mapFromAlias(item))
+            results.push(ShortTutor.mapFromAlias(item));
         }
         return {results, lastEvaluatedKey: response.LastEvaluatedKey};
     } catch (e) {

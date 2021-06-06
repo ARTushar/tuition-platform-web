@@ -1,7 +1,7 @@
 import Remuneration from "../utils/remuneration";
 import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {ShortTutorAliases} from "../../data-layer/utils/aliases";
-import {getTutorsByLoTypeGenSub} from "../../data-layer/entities/tutor/getTutor";
+import {getAllTutors, getTutorsByLoTypeGenSub} from "../../data-layer/entities/tutor/getTutor";
 
 interface ConstructorParams {
     userId: string;
@@ -76,6 +76,14 @@ export default class ShortTutor {
                 country: 'Bangladesh',
                 ...query
             });
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    static async getAllTutors() {
+        try {
+            return await getAllTutors();
         } catch (e) {
             throw e;
         }
