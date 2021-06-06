@@ -10,6 +10,7 @@ import {checkUniquePK, generatePutTransactItem, generatePutTransactItemRaw} from
 import ShortTutor from "../../../models/tutor/shortTutor";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
 import {debug, objStringify} from "../../../utils/helpers";
+import {ShortTutorAliases} from "../../utils/aliases";
 
 export default async function createTutor(id: string, tutor: Tutor) {
     const debugCode = 'createTutor';
@@ -83,6 +84,8 @@ export default async function createTutor(id: string, tutor: Tutor) {
     })
     items.push(generatePutTransactItem({
             ...mainTutor.mapToAlias(),
+            [ShortTutorAliases.ugInstitute]: ugEQ.institute,
+            [ShortTutorAliases.ugDepartment]: ugEQ.department,
             PK: tutorPK.PK,
             SK: tutorPK.SK,
             [type]: 'Tutor',

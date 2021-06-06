@@ -40,13 +40,13 @@ export async function getUserByEmail(email: string): Promise<User> {
     const gsi1Keys = genUserGSI1PK(email);
 
     const params: QueryCommandInput = generateQueryInput(
-        '#pk = :pk AND #sk = :sk', {
+        {keyConditionExpression : '#pk = :pk AND #sk = :sk', attributeNames : {
             "#pk": "GSI1PK",
             "#sk": "GSI1SK"
-        }, {
+        }, attributeValues : {
             ":pk": gsi1Keys.GSI1PK,
             ":sk": gsi1Keys.GSI1SK
-        }, false, 'GSI1'
+        }, indexForward : false, indexName : 'GSI1'}
     )
 
     const command = new QueryCommand(params);
@@ -67,13 +67,13 @@ export async function getUserByEmail(email: string): Promise<User> {
 export async function getUserByMobile(mobile: string): Promise<User> {
     const gsi2Keys = genUserGSI2PK(mobile);
     const params: QueryCommandInput = generateQueryInput(
-        '#pk = :pk AND #sk = :sk', {
+        {keyConditionExpression : '#pk = :pk AND #sk = :sk', attributeNames : {
             "#pk": "GSI2PK",
             "#sk": "GSI2SK"
-        }, {
+        }, attributeValues : {
             ":pk": gsi2Keys.GSI2PK,
             ":sk": gsi2Keys.GSI2SK
-        }, false, 'GSI2'
+        }, indexForward : false, indexName : 'GSI2'}
     )
     const command = new QueryCommand(params);
     try {

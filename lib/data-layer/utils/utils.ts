@@ -126,17 +126,37 @@ function generateItemFromGenerators(keyGenerators, params, values, type) {
     return item;
 }
 
-export function generateQueryInput(keyConditionExpression, attributeNames, attributeValues, indexForward=false, indexName=undefined): QueryCommandInput {
+interface GenerateQueryInputParams {
+    keyConditionExpression: any;
+    attributeNames: any;
+    attributeValues: any;
+    filterExpression?: string;
+    indexForward?: boolean;
+    indexName?: any;
+    lastKey?: any;
+    limit?: any;
+}
+
+export function generateQueryInput({keyConditionExpression, attributeNames, attributeValues, filterExpression, indexForward=false, indexName=undefined, lastKey=undefined, limit=undefined}: GenerateQueryInputParams): QueryCommandInput {
 
     let queryInput: QueryCommandInput = {
         TableName: DynamodbConfig.tableName,
         KeyConditionExpression: keyConditionExpression,
         ExpressionAttributeNames: attributeNames,
         ExpressionAttributeValues: marshall(attributeValues),
-        ScanIndexForward: indexForward
+        ScanIndexForward: indexForward,
+    }
+    if(filterExpression && filterExpression.length > 1) {
+        queryInput.FilterExpression = filterExpression;
     }
     if(indexName) {
         queryInput['IndexName'] = indexName;
+    }
+    if(lastKey) {
+        queryInput.ExclusiveStartKey = lastKey;
+    }
+    if(limit) {
+        queryInput.Limit = limit
     }
     return queryInput;
 }
@@ -144,10 +164,10 @@ export function generateQueryInput(keyConditionExpression, attributeNames, attri
 
 export function generateGetItem(keyGenerator, params) {
     const key = keyGenerator(...params)
-     let item: GetItemCommandInput = {
-         Key: marshall(key), TableName: DynamodbConfig.tableName
-     }
-     return item
+    let item: GetItemCommandInput = {
+        Key: marshall(key), TableName: DynamodbConfig.tableName
+    }
+    return item
 }
 
 export function generateUpdateItem(keyGenerator, params, updateAttributes: UpdateAttributes, condition=undefined): UpdateItemCommandInput {

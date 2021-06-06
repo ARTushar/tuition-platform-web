@@ -63,7 +63,7 @@ export default class ShortTutor {
             gender: undefined, name: undefined, profilePicture: undefined, rating: undefined,
             ugDepartment: undefined, ugInstitute: undefined, userId: undefined, verified: undefined,
             ...mapItemFromAlias(ShortTutorAliases, item),
-            remuneration: Remuneration.mapFromAlias(item[ShortTutorAliases.remuneration])
+            remuneration: item[ShortTutorAliases.remuneration]? Remuneration.mapFromAlias(item[ShortTutorAliases.remuneration]): undefined
         })
     }
 }
