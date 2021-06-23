@@ -41,10 +41,70 @@
     "Nawaar al-Sadek",
     "Ramla el-Baig"
   ],
+  "studentTypes": [
+    "Bangla Version",
+    "English Version",
+    "English Medium",
+    "Admission"
+  ],
+  "studentClasses": {
+    "Bangla Version": [
+      "Class 9",
+      "Class 10",
+      "SSC",
+      "College 1st Year",
+      "College 2nd Year",
+      "HSC"
+    ],
+    "English Version": [
+      "Class 9",
+      "Class 10",
+      "SSC",
+      "College 1st Year",
+      "College 2nd Year",
+      "HSC"
+    ],
+    "English Medium": ["Standard 8", "Standard 9", "O Level", "A Level"],
+    "Admission": [
+      "Engineering",
+      "Medical",
+      "University Science",
+      "University Commerce"
+    ]
+  },
   "sInstitutes": ["A K High School", "Motijheel Ideal School"],
   "hsInstitutes": ["Notre Dame College", "Holy Cross College"],
   "ugradInstitutes": ["BUET", "KUET", "RUET", "CUET", "DU"],
   "groups": ["science", "commerce", "arts"],
   "departments": ["CSE", "EEE", "CE", "ME", "IPE"],
-  "subjects": ["Physics", "Chemistry", "Higher Math", "Biology", "English"]
+  "subjects": {
+    "Class 9": ["Physics", "Chemistry", "Mathematics", "ICT"],
+    "Class 10": ["Physics", "Chemistry", "Mathematics", "ICT"],
+    "SSC": ["Physics", "Chemistry", "Mathematics", "ICT"],
+    "College 1st Year": ["Physics", "Chemistry", "Mathematics", "ICT"],
+    "College 2nd Year": ["Physics", "Chemistry", "Mathematics", "ICT"],
+    "HSC": ["Physics", "Chemistry", "Mathematics", "ICT"],
+    "Engineering": ["Physics", "Chemistry", "Mathematics"],
+    "Medical": ["Biology", "Physics", "Chemistry"],
+    "University Science":  ["Physics", "Chemistry", "Mathematics", "Biology"],
+    "University Commerce": ["Bangla", "English"],
+    "Standard 8": [
+      "Accounting",
+      "Geography",
+      "Bangla",
+      "ICT",
+      "Law",
+      "Statistics"
+    ],
+    "Standard 9": [
+      "Accounting",
+      "Geography",
+      "Bangla",
+      "ICT",
+      "Law",
+      "Statistics"
+    ],
+    "O Level": ["Accounting", "Geography", "Bangla", "ICT", "Law", "Statistics"],
+    "A Level": ["Accounting", "Geography", "Bangla", "ICT", "Law", "Statistics"]
+  }
 }

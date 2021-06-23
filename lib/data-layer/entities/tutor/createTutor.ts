@@ -28,6 +28,11 @@ export default async function createTutor(id: string, tutor: Tutor) {
     }
 
     const ugEQ = tutor.educationQualifications.find(e => e.degree === 'undergraduate');
+    const district = tutor.preference.locations[0].district;
+    const areas: string[] = [];
+    for(const loc of tutor.preference.locations) {
+        areas.push(loc.area);
+    }
     if(!ugEQ) return null;
 
 
@@ -40,8 +45,8 @@ export default async function createTutor(id: string, tutor: Tutor) {
         ugDepartment: ugEQ.department,
         rating: tutor.rating,
         country: tutor.preference.country,
-        district: tutor.preference.district,
-        areas: tutor.preference.areas,
+        district,
+        areas,
     }
 
     let shortTutorGSIParams: GenShortTutorGSI1PKParams = {
@@ -49,18 +54,18 @@ export default async function createTutor(id: string, tutor: Tutor) {
         enabled: tutor.enabled,
         verified: tutor.verified,
         country: tutor.preference.country,
-        district: tutor.preference.district,
+        district ,
         institute: ugEQ.institute,
         userId: tutor.userId
     }
 
     for (const rem of tutor.preference.remunerations) {
-        shortTutorGSIParams.tuitionType = rem.type;
+        shortTutorGSIParams.tuitionType = rem.studentType;
         const st = new ShortTutor({
             ...shortTutor,
             remuneration: rem
         });
-        const stPk = genTutorShortPK(tutor.userId, rem.type);
+        const stPk = genTutorShortPK(tutor.userId, rem.studentType);
         const gsi1Pk = genShortTutorGSI1PK(shortTutorGSIParams);
         items.push(generatePutTransactItem({
             ...st.mapToAlias(),
@@ -94,7 +99,6 @@ export default async function createTutor(id: string, tutor: Tutor) {
         }, checkUniquePK
     ));
 
-    const prefPK = genTutorPrefPK(tutor.userId);
     items.push(generatePutTransactItemRaw(genTutorPrefPK, [tutor.userId], tutor.preference, 'TutorPreference'));
 
     console.assert(items.length <= 25);

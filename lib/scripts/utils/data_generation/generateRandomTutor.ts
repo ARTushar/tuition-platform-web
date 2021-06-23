@@ -10,6 +10,7 @@ import Schedule from "../../../models/utils/schedule";
 import Remuneration from "../../../models/utils/remuneration";
 import Areas from '../../../files/areas.json';
 import {debug} from "../../../utils/helpers";
+import Location from "../../../models/utils/location";
 
 
 export function generateRandomTutor(user: User) {
@@ -99,16 +100,23 @@ function generateRandomSchedule(): Schedule {
 }
 
 
+function getRandomClass(type: string) {
+    return randomParams.studentClasses[type][getRandomInt(randomParams.studentClasses[type].length)];
+}
+
 function generateRandomRemuneration(type: string){
-    let totalSubjects = getRandomInt(1, 3);
+    let studentClass = getRandomClass(type);
+    debug('random class', studentClass);
+    let totalSubjects = getRandomInt(randomParams.subjects[studentClass].length, 1);
     let subjects: string[] = [];
     for(let i = 0; i < totalSubjects; i++) {
-        subjects.push(randomParams.subjects[getRandomInt(randomParams.subjects.length)]);
+        subjects.push(randomParams.subjects[studentClass][getRandomInt(randomParams.subjects[studentClass].length)]);
     }
     const fr = getRandomInt(20, 10);
     const t = getRandomInt(fr + 5, fr);
     return new Remuneration({
-        type,
+        studentType: type,
+        studentClass,
         subjects,
         from: fr * 500,
         to: t * 500
@@ -117,23 +125,25 @@ function generateRandomRemuneration(type: string){
 
 function generateRandomPreference(address: Address): Preference {
     const totalAreas = getRandomInt(6, 1);
-    let areasNeeded:string[] = [];
+    let areasNeeded:Location[] = [];
 
     for(let i = 0; i < totalAreas; i++) {
-        areasNeeded.push(Areas[address.district][getRandomInt(Areas[address.district].length)]);
+        areasNeeded.push(new Location({
+            district: address.district,
+            area: Areas[address.district][getRandomInt(Areas[address.district].length)]
+        }));
     }
 
-    const totalRems = getRandomInt(2, 1);
+    const totalRems = getRandomInt(4, 1);
     const remunerations: Remuneration[] = [];
     for(let i = 0; i < totalRems; i++) {
-        remunerations.push(generateRandomRemuneration(ConstantEnums.tuitionType[i]));
+        remunerations.push(generateRandomRemuneration(randomParams.studentTypes[i]));
     }
 
     return new Preference({
         gender: getRandomEnumValue(ConstantEnums.genderPref),
         country: address.country,
-        district: address.district,
-        areas: areasNeeded,
+        locations: areasNeeded,
         schedule: generateRandomSchedule(),
         remunerations
     })

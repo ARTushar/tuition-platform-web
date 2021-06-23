@@ -32,8 +32,7 @@ export const TutorEQAliases = {
 export const PreferenceAliases = {
     gender: 'gn',
     country: 'cn',
-    district: 'dis',
-    areas: 'ar',
+    locations: 'lcs',
     schedule: 'sc',
     remunerations: 'rem'
 }
@@ -85,15 +84,14 @@ export const AddressAliases = {
     // postalCode: 'pc'
 }
 export const RemunerationAliases = {
-    type: 'ty',
+    studentType: 'ty',
+    studentClass: 'sc',
     subjects: 'su',
     from: 'fr',
     to: 'to'
 }
 export const LocationAliases = {
-    country: 'cn',
     district: 'dis',
-    upazilla: 'up',
     area: 'ar'
 }
 
