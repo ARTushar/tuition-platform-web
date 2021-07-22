@@ -13,7 +13,7 @@ const argv = generateArgv();
     const user = generateRandomUser();
     let newUser;
     try {
-         newUser = await createUser(user);
+         newUser = await createUser(user, "123456");
         printObject(newUser);
     } catch(e){
         console.log(e);

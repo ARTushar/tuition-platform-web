@@ -11,7 +11,7 @@ import dynamoDBClient from "../../utils/getDynamoDBClient";
 import {debug, generateID, objStringify} from "../../../utils/helpers";
 import {hashPassword} from "../../../utils/passwordHelpers";
 
-export default async function (user: User, password: undefined | string): Promise<User> {
+export default async function (user: User, password?: string): Promise<User> {
     if(!user.id){
         user.id = await generateID();
         if(password) {
