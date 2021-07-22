@@ -1,5 +1,6 @@
 export const UserAliases = {
     id: 'id',
+    hash: 'hs',
     name: 'na',
     email: 'em',
     emailVerified: 'emv',

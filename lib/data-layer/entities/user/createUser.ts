@@ -7,12 +7,19 @@ import {
     TransactWriteItemsCommandOutput
 } from "@aws-sdk/client-dynamodb";
 import {checkUniquePK, generatePutTransactItem} from "../../utils/utils";
-import {marshall} from "@aws-sdk/util-dynamodb";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
 import {debug, generateID, objStringify} from "../../../utils/helpers";
+import {hashPassword} from "../../../utils/passwordHelpers";
 
-export default async function (user: User): Promise<User> {
-    if(!user.id) user.id = await generateID();
+export default async function (user: User, password: undefined | string): Promise<User> {
+    if(!user.id){
+        user.id = await generateID();
+        if(password) {
+            user.hash = await hashPassword(password);
+        } else {
+            throw new Error("No password field");
+        }
+    }
     user.createdAt = new Date().toDateString();
     user.updatedAt = user.createdAt;
 

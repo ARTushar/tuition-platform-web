@@ -12,6 +12,7 @@ import DynamodbConfig from "../../utils/dynamodbConfig";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
 import {generateQueryInput} from "../../utils/utils";
 import {debug} from "../../../utils/helpers";
+import {comparePassword} from "../../../utils/passwordHelpers";
 
 export async function  getUserById(userId: string): Promise<User> {
     const primaryKeys = genUserPK(userId);
@@ -30,13 +31,13 @@ export async function  getUserById(userId: string): Promise<User> {
         }
         return null;
     } catch (e) {
-        console.log(e);
+        debug('error ', e);
         throw e;
     }
 }
 
 export async function getUserByEmail(email: string): Promise<User> {
-    console.log("email: " + email)
+    debug("email: " + email)
     const gsi1Keys = genUserGSI1PK(email);
 
     const params: QueryCommandInput = generateQueryInput(
@@ -90,7 +91,10 @@ export async function getUserByMobile(mobile: string): Promise<User> {
     }
 }
 
-//  TODO: implement fetch users query
-// export async function getUsers(descendingOrder: boolean = true): Promise<User[]> {
-//
-// }
+//  DONE: implement getUserByEmailPass
+export async function getUserByEmailPass(email: string, password: string): Promise<User> {
+    const user = await getUserByEmail(email);
+    if(!user) return null;
+    if(await comparePassword(password, user.hash)) return user;
+    return null;
+}

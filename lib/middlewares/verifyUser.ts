@@ -1,3 +1,6 @@
+import User from "../models/user/user";
+import {createForbiddenError} from "../utils/errorCreator";
+
 // import { debug } from '../utils/helpers';
 // import { createForbiddenError } from '../utils/errorCreator';
 // import User from '../models/user/User';
@@ -40,3 +43,13 @@
 //         return next(createForbiddenError('Unauthorized user: '+ e.message));
 //     }
 // }
+
+
+export default async function (req, res, next) {
+    const user = await User.verifyUser(req.body.email, req.body.password);
+    if(user) {
+        req.user = user;
+        return next();
+    }
+    return next(createForbiddenError('Unauthorized user'));
+}
