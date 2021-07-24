@@ -94,7 +94,9 @@ export async function getUserByMobile(mobile: string): Promise<User> {
 //  DONE: implement getUserByEmailPass
 export async function getUserByEmailPass(email: string, password: string): Promise<User> {
     const user = await getUserByEmail(email);
+    debug('user', user);
     if(!user) return null;
     if(await comparePassword(password, user.hash)) return user;
+    debug("user get", "user password doesn't match" );
     return null;
 }
