@@ -47,6 +47,8 @@ import {createForbiddenError} from "../utils/errorCreator";
 
 export default async function (req, res, next) {
     const user = await User.verifyUser(req.body.email, req.body.password);
+    delete req.body.email;
+    delete req.body.password;
     if(user) {
         req.user = user;
         return next();
