@@ -21,7 +21,7 @@ interface ConstructorParams {
 interface User1 {
     name: string;
     email: string;
-    mobile: string;
+    mobileNumber: string;
     accountType: any;
     password: string;
     gender: string;
@@ -98,14 +98,14 @@ export default class User {
         }
     }
 
-    static async createUser({name, email, mobile, accountType, password, gender, country, district, area}: User1): Promise<User> {
+    static async createUser({name, email, mobileNumber, accountType, password, gender, country, district, area}: User1): Promise<User> {
         try {
-            return await createUser(new User({
+            let user = await createUser(new User({
                 name,
                 email,
                 emailVerified: false,
                 accountType,
-                mobileNumber: mobile,
+                mobileNumber,
                 gender,
                 address: new Address({
                     country,
@@ -113,6 +113,8 @@ export default class User {
                     area
                 })
             }), password);
+            delete user.hash;
+            return user;
         } catch (e) {
             throw e;
         }
@@ -120,7 +122,9 @@ export default class User {
 
     static async updateUser(user) {
         try {
-            return updateUser(User.constructFactory(user));
+            let user = await updateUser(User.constructFactory(user));
+            delete user.hash;
+            return user;
         } catch (e) {
             throw e;
         }
@@ -128,7 +132,9 @@ export default class User {
 
     static async getUserById(id: string) {
         try {
-            return await getUserById(id);
+            let user = await getUserById(id);
+            delete user.hash;
+            return user;
         } catch (e) {
             throw e;
         }
