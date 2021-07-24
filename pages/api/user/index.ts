@@ -5,6 +5,14 @@ import verifyUser from "../../../lib/middlewares/verifyUser";
 const handler = createNC();
 
 handler
+    .get(async(req, res, next) => {
+        try {
+            const user = await User.verifyUser(req.body.email, req.body.password);
+            res.status(200).json(user);
+        } catch (e) {
+            next(e);
+        }
+    })
     .post(async (req, res, next) => {
         try {
             const user = await User.createUser(req.body);
