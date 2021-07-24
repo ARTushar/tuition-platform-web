@@ -81,6 +81,7 @@ interface TutorByLocationType {
     country: string;
     district: string;
     institute?: string;
+    studentClass?: string;
     area?: string;
     gender?: string;
     subjects?: string[];
@@ -88,7 +89,7 @@ interface TutorByLocationType {
     lastKey?: any;
 }
 
-export async function getTutorsByLoTypeGenSub({enabled, verified, type, country, district, institute, area, gender, subjects, limit=1000, lastKey}: TutorByLocationType) {
+export async function getTutorsByLoTypeClassGenSub({enabled, verified, type, country, district, institute, studentClass, area, gender, subjects, limit=1000, lastKey}: TutorByLocationType) {
     const pk = genShortTutorGSI1PK({
         enabled,
         verified,
@@ -106,6 +107,11 @@ export async function getTutorsByLoTypeGenSub({enabled, verified, type, country,
     let attributeValues = {
         ':pk': pk.GSI1PK,
     };
+    if(institute) {
+        attributeNames['#sk'] = 'GSI1SK';
+        attributeValues[':sk'] = 'INS#'+institute;
+        keyConditionExpression += '  AND begins_with(#sk, :sk)';
+    }
     let indexName = 'GSI1';
     let filterExpression = '';
     let ca = 1, cv = 1;
@@ -122,6 +128,15 @@ export async function getTutorsByLoTypeGenSub({enabled, verified, type, country,
         attributeNames[`#f${ca}`] = ShortTutorAliases.gender;
         attributeValues[`:f${cv}`] = gender;
         ca += 1;
+        cv += 1;
+    }
+    if(studentClass) {
+        if(filterExpression.length) filterExpression += ' AND '
+        filterExpression += `#f${ca}.#f${ca+1} = :f${cv}`;
+        attributeNames[`#f${ca}`] = ShortTutorAliases.remuneration;
+        attributeNames[`#f${ca+1}`] = RemunerationAliases.studentClass;
+        attributeValues[`:f${cv}`] = studentClass;
+        ca += 2;
         cv += 1;
     }
     if(subjects) {

@@ -44,4 +44,16 @@ export default class TutorEQ implements Education {
             ...mapItemFromAlias(TutorEQAliases, item)
         })
     }
+
+    static constructFactory(edu): TutorEQ {
+        return new TutorEQ({
+            degree: edu.degree,
+            medium: edu.medium,
+            department: edu.department,
+            group: edu.group,
+            institute: edu.institute,
+            level: edu.level,
+            term: edu.term
+        });
+    }
 }

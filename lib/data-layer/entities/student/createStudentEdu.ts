@@ -5,7 +5,7 @@ import {checkUniquePK, generatePutItemRaw} from "../../utils/utils";
 import dynamoDBClient from "../../utils/getDynamoDBClient";
 import {debug, objStringify} from "../../../utils/helpers";
 
-export default async function createStudentEdu(id: string, education: StudentEQ): Promise<Education> {
+export default async function createStudentEdu(id: string, education: StudentEQ): Promise<StudentEQ> {
     const debugCode = 'CreateStudent'
     education.createdAt = new Date().toISOString();
     education.updatedAt = education.createdAt;

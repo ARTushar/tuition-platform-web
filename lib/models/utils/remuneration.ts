@@ -35,4 +35,14 @@ export default class Remuneration {
             ...mapItemFromAlias(RemunerationAliases, item)
         })
     }
+
+    static constructFactory(remuneration): Remuneration {
+        return new Remuneration({
+            studentClass: remuneration.studentClass,
+            studentType: remuneration.studentType,
+            subjects: remuneration.subjects,
+            from: remuneration.from,
+            to: remuneration.to
+        });
+    }
 }

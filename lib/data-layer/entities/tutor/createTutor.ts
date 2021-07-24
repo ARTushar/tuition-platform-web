@@ -16,8 +16,8 @@ export default async function createTutor(id: string, tutor: Tutor) {
     const debugCode = 'createTutor';
 
     tutor.userId = id;
-    tutor.createdAt = new Date().toISOString();
-    tutor.updatedAt = tutor.createdAt;
+    if(!tutor.createdAt) tutor.createdAt = new Date().toISOString();
+    if(!tutor.updatedAt) tutor.updatedAt = tutor.createdAt;
 
     let items: TransactWriteItem[] = [];
     const type = '_tp';

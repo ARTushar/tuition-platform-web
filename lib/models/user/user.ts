@@ -1,7 +1,9 @@
 import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {UserAliases} from "../../data-layer/utils/aliases";
 import Address from "../utils/address";
-import {getUserByEmailPass} from "../../data-layer/entities/user/getUser";
+import {getUserByEmailPass, getUserById} from "../../data-layer/entities/user/getUser";
+import createUser from "../../data-layer/entities/user/createUser";
+import {updateUser} from "../../data-layer/entities/user/updateUser";
 
 interface ConstructorParams {
     id?: string;
@@ -14,6 +16,18 @@ interface ConstructorParams {
     gender?: string;
     profilePicture?: string;
     address?: Address;
+}
+
+interface User1 {
+    name: string;
+    email: string;
+    mobile: string;
+    accountType: any;
+    password: string;
+    gender: string;
+    country: string;
+    district: string;
+    area: string;
 }
 
 export default class User {
@@ -61,9 +75,60 @@ export default class User {
         });
     }
 
+    static constructFactory(user) {
+        return new User({
+            id: user.id,
+            hash: user.hash,
+            name: user.name,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            accountType: user.accountType,
+            mobileNumber: user.mobileNumber,
+            profilePicture: user.profilePicture,
+            gender: user.gender,
+            address: Address.constructFactory(user.address)
+        })
+    }
+
     static async verifyUser(email: string, password: string): Promise<User> {
         try {
             return await getUserByEmailPass(email, password);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    static async createUser({name, email, mobile, accountType, password, gender, country, district, area}: User1): Promise<User> {
+        try {
+            return await createUser(new User({
+                name,
+                email,
+                emailVerified: false,
+                accountType,
+                mobileNumber: mobile,
+                gender,
+                address: new Address({
+                    country,
+                    district,
+                    area
+                })
+            }), password);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    static async updateUser(user) {
+        try {
+            return updateUser(User.constructFactory(user));
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    static async getUserById(id: string) {
+        try {
+            return await getUserById(id);
         } catch (e) {
             throw e;
         }

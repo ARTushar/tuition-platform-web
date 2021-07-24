@@ -38,4 +38,16 @@ export default class Schedule {
     static mapFromAlias(item) {
         return new Schedule(mapItemFromAlias(ScheduleAliases, item));
     }
+
+    static constructFactory(schedule): Schedule {
+        return new Schedule({
+            saturday: schedule.saturday,
+            sunday: schedule.sunday,
+            monday: schedule.monday,
+            tuesday: schedule.tuesday,
+            wednesday: schedule.wednesday,
+            thursday: schedule.thursday,
+            friday: schedule.friday
+        });
+    }
 }

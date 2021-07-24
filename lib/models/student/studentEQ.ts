@@ -41,4 +41,14 @@ export default class StudentEQ implements Education{
         })
     }
 
+    static constructFactory(edu): StudentEQ {
+        return new StudentEQ({
+            type: edu.type,
+            department: edu.department,
+            group: edu.group,
+            institute: edu.institute,
+            level: edu.level,
+            term: edu.term
+        });
+    }
 }

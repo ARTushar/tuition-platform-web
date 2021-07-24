@@ -26,4 +26,11 @@ export default class Location {
             ...mapItemFromAlias(LocationAliases, item)
         })
     }
+
+    static constructFactory(location): Location {
+        return new Location({
+            district: location.district,
+            area: location.area
+        });
+    }
 }

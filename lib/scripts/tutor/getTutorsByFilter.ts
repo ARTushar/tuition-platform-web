@@ -1,14 +1,14 @@
 #!/usr/bin/env ts-node
 
 import { generateArgv, printObject } from '../utils/utils';
-import {getTutorsByLoTypeGenSub} from "../../data-layer/entities/tutor/getTutor";
+import {getTutorsByLoTypeClassGenSub} from "../../data-layer/entities/tutor/getTutor";
 
 const argv = generateArgv();
 
 (async ()=> {
     if(argv.type) {
         try {
-            const tutors = await getTutorsByLoTypeGenSub({
+            const tutors = await getTutorsByLoTypeClassGenSub({
                 enabled: true,
                 verified: false,
                 type: argv.type,
@@ -17,6 +17,7 @@ const argv = generateArgv();
                 institute: argv.ins,
                 area: argv.area,
                 gender: argv.gender,
+                studentClass: argv.cls,
                 subjects: [argv.sub]
             });
             printObject(tutors);

@@ -15,4 +15,12 @@ export class VideoLink {
         this.subject = subject;
         this.videoLink = videoLink;
     }
+
+    static constructFactory(link) {
+        return new VideoLink({
+            title: link.title,
+            subject: link.subject,
+            videoLink: link.videoLink
+        });
+    }
 }

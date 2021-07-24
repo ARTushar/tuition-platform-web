@@ -62,4 +62,25 @@ export default class Preference {
             locations: locs
         })
     }
+
+    static constructFactory(preference): Preference {
+        let locs: Location[] = [];
+        let rems: Remuneration[] = [];
+
+        for(const loc of preference.locations) {
+            locs.push(Location.constructFactory(loc));
+        }
+
+        for(const rem of preference.remunerations) {
+            rems.push(Remuneration.constructFactory(rem));
+        }
+
+        return new Preference({
+            gender: preference.gender,
+            country: preference.country,
+            locations: locs,
+            schedule: Schedule.constructFactory(preference.schedule),
+            remunerations: rems
+        });
+    }
 }

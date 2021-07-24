@@ -1,22 +1,22 @@
 import Remuneration from "../utils/remuneration";
 import {mapItemFromAlias, mapItemToAlias} from "../../data-layer/utils/utils";
 import {ShortTutorAliases} from "../../data-layer/utils/aliases";
-import {getAllTutors, getTutorsByLoTypeGenSub} from "../../data-layer/entities/tutor/getTutor";
+import {getAllTutors, getTutorsByLoTypeClassGenSub} from "../../data-layer/entities/tutor/getTutor";
 
 interface ConstructorParams {
-    userId: string;
-    enabled: boolean;
-    verified: boolean;
-    name: string;
-    gender: string;
-    profilePicture: string;
-    ugInstitute: string;
-    ugDepartment: string;
-    rating: number;
-    country: string;
-    district: string;
-    areas: string[];
-    remuneration: Remuneration;
+    userId?: string;
+    enabled?: boolean;
+    verified?: boolean;
+    name?: string;
+    gender?: string;
+    profilePicture?: string;
+    ugInstitute?: string;
+    ugDepartment?: string;
+    rating?: number;
+    country?: string;
+    district?: string;
+    areas?: string[];
+    remuneration?: Remuneration;
 }
 
 export default class ShortTutor {
@@ -70,7 +70,7 @@ export default class ShortTutor {
 
     static async getTutors(query) {
         try {
-            return await getTutorsByLoTypeGenSub({
+            return await getTutorsByLoTypeClassGenSub({
                 enabled: true,
                 verified: false,
                 country: 'Bangladesh',

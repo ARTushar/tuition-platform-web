@@ -28,4 +28,12 @@ export default class Address {
             ...mapItemFromAlias(AddressAliases, item)
         })
     }
+
+    static constructFactory(address): Address {
+        return new Address({
+            country: address.constructor,
+            district: address.district,
+            area: address.area
+        });
+    }
 }

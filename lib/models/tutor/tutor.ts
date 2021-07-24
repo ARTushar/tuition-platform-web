@@ -6,6 +6,8 @@ import {PreferenceAliases, TutorAliases} from "../../data-layer/utils/aliases";
 import {AttributeValue} from "@aws-sdk/client-dynamodb";
 import {unmarshall} from "@aws-sdk/util-dynamodb";
 import {getTutorByUserId} from "../../data-layer/entities/tutor/getTutor";
+import updateTutor from "../../data-layer/entities/tutor/updateTutor";
+import createTutor from "../../data-layer/entities/tutor/createTutor";
 
 interface ConstructorParams {
     userId: string;
@@ -100,6 +102,50 @@ export default class Tutor{
     static async getTutorById(id: string): Promise<Tutor> {
         try {
             return await getTutorByUserId(id);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    static constructFactory(tutor) {
+        let links: VideoLink[] = [];
+        let eqs: TutorEQ[] = [];
+
+        for(const link of tutor.demoVideoLinks) {
+            links.push(VideoLink.constructFactory(link));
+        }
+
+        for(const eq of tutor.educationQualifications) {
+            eqs.push(TutorEQ.constructFactory(eq));
+        }
+
+        return new Tutor({
+            userId: tutor.userId,
+            enabled: tutor.enabled,
+            verified: tutor.verified,
+            name: tutor.name,
+            gender: tutor.gender,
+            profilePicture: tutor.profilePicture,
+            rating: tutor.rating,
+            educationQualifications: eqs,
+            introVideoLink: tutor.introVideoLink,
+            demoVideoLinks: links,
+            introText: tutor.introText,
+            preference: Preference.constructFactory(tutor.preference)
+        });
+    }
+
+    static async create(id, tutor) {
+        try  {
+            return await createTutor(id, Tutor.constructFactory(tutor));
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    static async update(userId, newTutor) {
+        try {
+            return await updateTutor(userId, Tutor.constructFactory(newTutor), newTutor.gender);
         } catch (e) {
             throw e;
         }

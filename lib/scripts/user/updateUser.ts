@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import { generateArgv, printObject } from '../utils/utils';
-import {updateUser} from "../../data-layer/entities/user/updateuser";
+import {updateUser} from "../../data-layer/entities/user/updateUser";
 import User from "../../models/user/user";
 
 const argv = generateArgv();
