@@ -122,9 +122,9 @@ export default class User {
 
     static async updateUser(user) {
         try {
-            let user = await updateUser(User.constructFactory(user));
-            delete user.hash;
-            return user;
+            let newUser = await updateUser(User.constructFactory(user));
+            delete newUser.hash;
+            return newUser;
         } catch (e) {
             throw e;
         }
