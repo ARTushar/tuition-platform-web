@@ -11,12 +11,12 @@ import createTutor from "../../data-layer/entities/tutor/createTutor";
 
 interface ConstructorParams {
     userId: string;
-    enabled: boolean;
-    verified: boolean;
+    enabled?: boolean;
+    verified?: boolean;
     name: string;
     gender: string;
-    profilePicture: string;
-    rating: number;
+    profilePicture?: string;
+    rating?: number;
     educationQualifications: TutorEQ[];
     introVideoLink?: string;
     demoVideoLinks?: VideoLink[];
