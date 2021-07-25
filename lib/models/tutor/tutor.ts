@@ -24,6 +24,8 @@ interface ConstructorParams {
     demoVideoLinks?: VideoLink[];
     introText?: string;
     preference: Preference;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export default class Tutor{
@@ -43,7 +45,7 @@ export default class Tutor{
     updatedAt: string;
 
 
-    constructor({userId, enabled, verified, name, gender, profilePicture, rating, educationQualifications, introVideoLink, demoVideoLinks, introText, preference}: ConstructorParams) {
+    constructor({userId, createdAt, updatedAt, enabled, verified, name, gender, profilePicture, rating, educationQualifications, introVideoLink, demoVideoLinks, introText, preference}: ConstructorParams) {
         this.userId = userId;
         this.enabled = enabled;
         this.verified = verified;
@@ -56,6 +58,8 @@ export default class Tutor{
         this.demoVideoLinks = demoVideoLinks;
         this.introText = introText;
         this.preference = preference;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     mapToAlias() {
@@ -110,7 +114,7 @@ export default class Tutor{
         }
     }
 
-    static constructFactory(tutor) {
+    static constructFactory(tutor): Tutor {
         let links: VideoLink[] = [];
         let eqs: TutorEQ[] = [];
 
@@ -136,7 +140,9 @@ export default class Tutor{
             introVideoLink: tutor.introVideoLink,
             demoVideoLinks: links,
             introText: tutor.introText,
-            preference: Preference.constructFactory(tutor.preference)
+            preference: Preference.constructFactory(tutor.preference),
+            createdAt: tutor.createdAt,
+            updatedAt: tutor.updatedAt
         });
     }
 
@@ -158,11 +164,13 @@ export default class Tutor{
         debug("before creation tutor", tutor);
 
         try  {
-            const oldTutor = await getTutorByUserId(id);
-            if(oldTutor) await deleteTutor(id);
             let newt = Tutor.constructFactory(tutor);
-            newt.createdAt = oldTutor.createdAt;
-            newt.updatedAt = new Date().toISOString();
+            const oldTutor = await getTutorByUserId(id);
+            if(oldTutor) {
+                await deleteTutor(id);
+                newt.createdAt = oldTutor.createdAt;
+                newt.updatedAt = new Date().toISOString();
+            }
             return await createTutor(id, newt);
         } catch (e) {
             debug("inside tutor error", e);

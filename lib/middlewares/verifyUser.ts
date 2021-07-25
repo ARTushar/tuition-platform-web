@@ -47,6 +47,7 @@ import {debug} from "../utils/helpers";
 
 
 export default async function (req, res, next) {
+    debug("email, pass: ", req.headers.email, req.headers.password);
     const user = await User.verifyUser(req.headers.email, req.headers.password);
     if(user) {
         req.user = user;
