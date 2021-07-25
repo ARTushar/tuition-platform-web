@@ -156,6 +156,7 @@ export default class Tutor{
         try  {
             return await createTutor(id, Tutor.constructFactory(tutor));
         } catch (e) {
+            debug("inside tutor error", e);
             throw e;
         }
     }

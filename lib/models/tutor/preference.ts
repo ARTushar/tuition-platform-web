@@ -8,7 +8,7 @@ interface ConstructorParams {
     gender: string;
     country: string;
     locations: Location[]
-    schedule: Schedule;
+    schedule?: Schedule;
     remunerations: Remuneration[];
 }
 
@@ -79,7 +79,7 @@ export default class Preference {
             gender: preference.gender,
             country: preference.country,
             locations: locs,
-            schedule: Schedule.constructFactory(preference.schedule),
+            schedule: preference.schedule? Schedule.constructFactory(preference.schedule) : undefined,
             remunerations: rems
         });
     }
