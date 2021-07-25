@@ -9,6 +9,7 @@ import {getTutorByUserId} from "../../data-layer/entities/tutor/getTutor";
 import updateTutor from "../../data-layer/entities/tutor/updateTutor";
 import createTutor from "../../data-layer/entities/tutor/createTutor";
 import {debug} from "../../utils/helpers";
+import deleteTutor from "../../data-layer/entities/tutor/deleteTutor";
 
 interface ConstructorParams {
     userId: string;
@@ -157,6 +158,8 @@ export default class Tutor{
         debug("before creation tutor", tutor);
 
         try  {
+            const oldTutor = await getTutorByUserId(id);
+            if(oldTutor) await deleteTutor(id);
             return await createTutor(id, Tutor.constructFactory(tutor));
         } catch (e) {
             debug("inside tutor error", e);
