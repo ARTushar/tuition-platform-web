@@ -41,7 +41,7 @@ export default class Preference {
             ...mapItemToAlias(PreferenceAliases, this),
             [PreferenceAliases.remunerations]: rems,
             [PreferenceAliases.locations]: locs,
-            [PreferenceAliases.schedule]: this.schedule.mapToAlias()
+            [PreferenceAliases.schedule]: this.schedule?.mapToAlias()
         };
     }
 

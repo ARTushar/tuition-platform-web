@@ -64,7 +64,8 @@ export default class Tutor{
         }
         return {
             ...mapItemToAlias(TutorAliases, this),
-            [TutorAliases.educationQualifications]: eqs
+            [TutorAliases.educationQualifications]: eqs,
+            [TutorAliases.preference]: this.preference?.mapToAlias(),
         };
     }
 
