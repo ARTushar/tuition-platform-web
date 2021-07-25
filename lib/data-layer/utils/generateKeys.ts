@@ -85,3 +85,17 @@ export function genTutorGSI1PK({enabled, verified, institute, rating, userId}: G
         GSI1SK: "RT#" + rating + "#" + userId
     }
 }
+
+export function genRequestPK(studentId: string, tutorId: string) {
+    return {
+        PK: "STD#" + studentId,
+        SK: tutorId
+    }
+}
+
+export function genRequestGSI1PK(studentId: string, tutorId: string) {
+    return {
+        GSI1PK: "TUT#" + tutorId,
+        GSI1SK: studentId
+    }
+}

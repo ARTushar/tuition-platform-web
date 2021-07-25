@@ -106,6 +106,22 @@ export const ScheduleAliases = {
     friday: 'fr'
 }
 
+export const RequestAliases = {
+    requestId: 'rid',
+    tutorId: 'tid',
+    studentId: 'sid',
+    country: 'cn',
+    district: 'dis',
+    area: 'ar',
+    gender: 'gn',
+    version: 'ver',
+    studentClass: 'sc',
+    subjects: 'sub',
+    status: 'st',
+    createdAt: 'ca',
+    updatedAt: 'ua',
+}
+
 export const VideoLinkAliases = {
     title: 'ti',
     subject: 's',
@@ -173,4 +189,10 @@ export const ScheduleType = {
     afterIsha: 'ai',
     evening: 'ev',
     night: 'ni'
+}
+
+export const RequestStatus = {
+    sent: 'sn',
+    cancelled: 'cn',
+    accepted: 'ac'
 }
