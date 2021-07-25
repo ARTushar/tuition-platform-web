@@ -136,6 +136,20 @@ export default class Tutor{
     }
 
     static async create(id, tutor) {
+        tutor.educationQualifications = [
+            {
+                degree: "undergraduate",
+                institute: tutor.education.university,
+                level: tutor.education.levelOrYear,
+                department: tutor.education.department
+            },
+            {
+                degree: "college",
+                institute: tutor.education.college
+            }
+        ]
+        delete tutor.education;
+
         try  {
             return await createTutor(id, Tutor.constructFactory(tutor));
         } catch (e) {
