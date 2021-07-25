@@ -160,7 +160,10 @@ export default class Tutor{
         try  {
             const oldTutor = await getTutorByUserId(id);
             if(oldTutor) await deleteTutor(id);
-            return await createTutor(id, Tutor.constructFactory(tutor));
+            let newt = Tutor.constructFactory(tutor);
+            newt.createdAt = oldTutor.createdAt;
+            newt.updatedAt = new Date().toISOString();
+            return await createTutor(id, newt);
         } catch (e) {
             debug("inside tutor error", e);
             throw e;
