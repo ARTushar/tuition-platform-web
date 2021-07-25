@@ -22,7 +22,7 @@ export function generateRandomTutor(user: User) {
     return new Tutor({
         userId: user.id,
         enabled: true,
-        verified: false,
+        verified: true,
         name: user.name,
         gender: user.gender,
         profilePicture: user.profilePicture,
