@@ -92,7 +92,9 @@ export default class User {
 
     static async verifyUser(email: string, password: string): Promise<User> {
         try {
-            return await getUserByEmailPass(email, password);
+            let user = await getUserByEmailPass(email, password);
+            delete user?.hash;
+            return user;
         } catch (e) {
             throw e;
         }
@@ -113,7 +115,7 @@ export default class User {
                     area
                 })
             }), password);
-            delete user.hash;
+            delete user?.hash;
             return user;
         } catch (e) {
             throw e;
@@ -123,7 +125,7 @@ export default class User {
     static async updateUser(user) {
         try {
             let newUser = await updateUser(User.constructFactory(user));
-            delete newUser.hash;
+            delete newUser?.hash;
             return newUser;
         } catch (e) {
             throw e;
@@ -133,7 +135,7 @@ export default class User {
     static async getUserById(id: string) {
         try {
             let user = await getUserById(id);
-            delete user.hash;
+            delete user?.hash;
             return user;
         } catch (e) {
             throw e;
