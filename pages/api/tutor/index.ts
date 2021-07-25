@@ -22,7 +22,7 @@ handler
             updatedTutor.gender = req.user.gender;
             updatedTutor.userId = req.user.id;
 
-            res.status(200).json({tutor: updatedTutor});
+            res.status(200).json(updatedTutor);
         } catch (e) {
             next(e);
         }
