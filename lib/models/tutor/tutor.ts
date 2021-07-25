@@ -112,8 +112,10 @@ export default class Tutor{
         let links: VideoLink[] = [];
         let eqs: TutorEQ[] = [];
 
-        for(const link of tutor.demoVideoLinks) {
-            links.push(VideoLink.constructFactory(link));
+        if(tutor.demoVideoLinks) {
+            for(const link of tutor.demoVideoLinks) {
+                links.push(VideoLink.constructFactory(link));
+            }
         }
 
         for(const eq of tutor.educationQualifications) {
