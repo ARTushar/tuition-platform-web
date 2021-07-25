@@ -8,6 +8,7 @@ import {unmarshall} from "@aws-sdk/util-dynamodb";
 import {getTutorByUserId} from "../../data-layer/entities/tutor/getTutor";
 import updateTutor from "../../data-layer/entities/tutor/updateTutor";
 import createTutor from "../../data-layer/entities/tutor/createTutor";
+import {debug} from "../../utils/helpers";
 
 interface ConstructorParams {
     userId: string;
@@ -149,6 +150,8 @@ export default class Tutor{
             }
         ]
         delete tutor.education;
+
+        debug("before creation tutor", tutor);
 
         try  {
             return await createTutor(id, Tutor.constructFactory(tutor));

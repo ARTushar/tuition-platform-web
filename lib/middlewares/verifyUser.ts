@@ -1,5 +1,6 @@
 import User from "../models/user/user";
 import {createForbiddenError} from "../utils/errorCreator";
+import {debug} from "../utils/helpers";
 
 // import { debug } from '../utils/helpers';
 // import { createForbiddenError } from '../utils/errorCreator';
@@ -51,6 +52,7 @@ export default async function (req, res, next) {
     delete req.body.password;
     if(user) {
         req.user = user;
+        debug("verified user", req.user);
         return next();
     }
     return next(createForbiddenError('Unauthorized user'));
