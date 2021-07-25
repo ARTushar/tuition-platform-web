@@ -47,9 +47,7 @@ import {debug} from "../utils/helpers";
 
 
 export default async function (req, res, next) {
-    const user = await User.verifyUser(req.body.email, req.body.password);
-    delete req.body.email;
-    delete req.body.password;
+    const user = await User.verifyUser(req.headers.email, req.headers.password);
     if(user) {
         req.user = user;
         debug("verified user", req.user);
