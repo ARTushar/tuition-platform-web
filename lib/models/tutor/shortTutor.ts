@@ -72,7 +72,7 @@ export default class ShortTutor {
         try {
             return await getTutorsByLoTypeClassGenSub({
                 enabled: true,
-                verified: false,
+                verified: true,
                 country: 'Bangladesh',
                 ...query
             });

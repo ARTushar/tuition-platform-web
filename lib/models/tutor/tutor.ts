@@ -165,6 +165,8 @@ export default class Tutor{
 
         try  {
             let newt = Tutor.constructFactory(tutor);
+            newt.enabled = true;
+            newt.verified = true;
             const oldTutor = await getTutorByUserId(id);
             if(oldTutor) {
                 await deleteTutor(id);

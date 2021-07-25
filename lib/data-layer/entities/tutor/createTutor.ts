@@ -44,7 +44,7 @@ export default async function createTutor(id: string, tutor: Tutor) {
         ugInstitute: ugEQ.institute,
         ugDepartment: ugEQ.department,
         rating: tutor.rating,
-        country: tutor.preference.country,
+        country: tutor.preference.country? tutor.preference.country: 'Bangladesh',
         district,
         areas,
     }
