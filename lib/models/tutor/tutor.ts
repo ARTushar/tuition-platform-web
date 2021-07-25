@@ -158,6 +158,19 @@ export default class Tutor{
     }
 
     static async update(userId, newTutor) {
+        newTutor.educationQualifications = [
+            {
+                degree: "undergraduate",
+                institute: newTutor.education.university,
+                level: newTutor.education.levelOrYear,
+                department: newTutor.education.department
+            },
+            {
+                degree: "college",
+                institute: newTutor.education.college
+            }
+        ]
+        delete newTutor.education;
         try {
             return await updateTutor(userId, Tutor.constructFactory(newTutor), newTutor.gender);
         } catch (e) {
