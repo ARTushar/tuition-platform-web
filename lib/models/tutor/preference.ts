@@ -57,7 +57,7 @@ export default class Preference {
         return new Preference({
             country: undefined, gender: undefined,
             ...mapItemFromAlias(PreferenceAliases, item),
-            schedule: Schedule.mapFromAlias(item[PreferenceAliases.schedule]),
+            schedule: item[PreferenceAliases.schedule] ? Schedule.mapFromAlias(item[PreferenceAliases.schedule]): undefined,
             remunerations: rems,
             locations: locs
         })
