@@ -12,7 +12,7 @@ interface ConstructorParams {
     district: string;
     area: string;
     gender: string;
-    version: string;
+    studentType: string;
     studentClass: string;
     subjects: string[];
     status?: string;
@@ -28,7 +28,7 @@ export default class Request {
     district: string;
     area: string;
     gender: string;
-    version: string;
+    studentType: string;
     studentClass: string;
     subjects: string[];
     status: string;
@@ -36,7 +36,7 @@ export default class Request {
     updatedAt: string;
 
 
-    constructor({requestId, tutorId, studentId, country, district, area, gender, version, studentClass, subjects, status, createdAt, updatedAt}: ConstructorParams) {
+    constructor({requestId, tutorId, studentId, country, district, area, gender, studentType, studentClass, subjects, status, createdAt, updatedAt}: ConstructorParams) {
         this.requestId = requestId;
         this.tutorId = tutorId;
         this.studentId = studentId;
@@ -44,7 +44,7 @@ export default class Request {
         this.district = district;
         this.area = area;
         this.gender = gender;
-        this.version = version;
+        this.studentType = studentType;
         this.studentClass = studentClass;
         this.subjects = subjects;
         this.status = status;
@@ -61,7 +61,7 @@ export default class Request {
             district: request.district,
             area: request.area,
             gender: request.gender,
-            version: request.version,
+            studentType: request.studentType,
             studentClass: request.studentClass,
             subjects: request.subjects,
             status: request.status,
