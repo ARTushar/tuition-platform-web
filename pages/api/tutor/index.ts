@@ -29,7 +29,7 @@ handler
     })
     .post(verifyUser, async (req, res, next) => {
         try {
-            const tutor = await Tutor.create(req.user.userId, req.body);
+            const tutor = await Tutor.create(req.user.id, req.body);
             res.status(200).json(tutor);
         } catch (e) {
             next(e);
@@ -37,7 +37,7 @@ handler
     })
     .put(verifyUser, async (req, res, next) => {
         try {
-            const tutor = await Tutor.update(req.user.userId, req.body);
+            const tutor = await Tutor.update(req.user.id, req.body);
             res.status(200).json(tutor);
         } catch (e) {
             next(e);

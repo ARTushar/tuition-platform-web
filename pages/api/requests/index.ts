@@ -33,7 +33,7 @@ handler
     })
     .put(verifyUser, async (req, res, next) => {
         try {
-            const updated = await Request.updateStatus(req.user.userId, req.body.id, req.body.status);
+            const updated = await Request.updateStatus(req.user.id, req.body.id, req.body.status);
             if(!updated) return next(createNotFoundError("Not found"));
             res.status(200).json(updated);
         } catch (e) {
