@@ -9,7 +9,9 @@ handler
         debug("filter", "query", req.query);
         try {
             for(const key of getKeys(req.query)) {
-                if(req.query[key] && req.query[key].length == 0) {
+                debug("filter key, value, length ", key, req.query[key], req.query[key].length);
+                if(req.query[key] && req.query[key].length === 0 ) {
+                    console.log("delete doesn't work");
                     delete req.query[key];
                 }
             }
